@@ -20,5 +20,16 @@ git clone https://github.com/gurumuda/pinjamBarang.git
 Install dependensi dengan composser
 
 ```base
-composser update
+composer update
+```
+Buat database baru dengan nama yang disesuaikan pada nama database di file env
+
+Buat table database dengan mengetikkan perintah
+```base
+php spark migrate
+```
+
+Isi data default dari untuk menjalankan aplikasi
+```base
+php spark db:seed DefaulDataSeeder
 ```
