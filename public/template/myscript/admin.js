@@ -14,9 +14,10 @@ $("#tombolTambahBarang").on("click", function(){
             success: function(data) {
                 if (data == "1") {
                     ntf("Data berhasil ditambah")
+                    $("#kodeBarang").focus()
+
                 } else if (data == "2") {
                     alt("error", "Data gagal ditambah..", "ada duplikasi kode barang")
-                    
                 }
             },
             error: function(e){
@@ -90,10 +91,13 @@ function konf(nama,id,url){
       })
 }
 
-$('#modalTambahBarang').on('hidden', function () {
+$('#modalTambahBarang').on('hidden.bs.modal', function () {
     document.location.reload();
   })
 
+$("#modalTambahBarang").on("shown.bs.modal", function () { 
+    $("#kodeBarang").focus()
+});
 
 
 
