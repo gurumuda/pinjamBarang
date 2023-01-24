@@ -29,7 +29,14 @@ class Admin extends BaseController
         }
 
         $dataBarang = new ModelDaftarBarang();
-        $data['barang'] = $dataBarang->findAll();
+
+        $data = [
+            'barang' => $dataBarang->paginate(5),
+            'pager' => $dataBarang->pager,
+        ];
+
+
+        // $data['barang'] = $dataBarang->findAll();
 
         return view('admin/pages/daftarBarang', $data);
     }
