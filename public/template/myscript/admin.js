@@ -48,12 +48,13 @@ function ntf(teks){
     Toastify({
         text: teks,
         style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
-          position : "absolute",
-          right : "10px",
-          padding : "10px",
-          borderRadius : "5px",
-          zIndex : "100"
+            color: "#000",
+            background: "linear-gradient(to right, #b5f5ed, #7ff5e7)",
+            position : "absolute",
+            right : "10px",
+            padding : "10px",
+            borderRadius : "5px",
+            zIndex : "10000"
         }
       }).showToast();
 }
