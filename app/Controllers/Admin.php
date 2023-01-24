@@ -31,7 +31,7 @@ class Admin extends BaseController
         $dataBarang = new ModelDaftarBarang();
 
         $data = [
-            'barang' => $dataBarang->paginate(5),
+            'barang' => $dataBarang->paginate(5, 'dataBarang'),
             'pager' => $dataBarang->pager,
         ];
 

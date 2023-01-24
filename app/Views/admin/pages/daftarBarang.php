@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <?= $pager->links() ?>
+                    <?= $pager->links('dataBarang', 'my_pagination') ?>
 
                 </div>
 
