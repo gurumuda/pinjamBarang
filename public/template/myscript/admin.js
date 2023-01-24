@@ -99,5 +99,30 @@ $("#modalTambahBarang").on("shown.bs.modal", function () {
     $("#kodeBarang").focus()
 });
 
+$(".tombolUbahBarang").on("click", function() {
+    $("#modalUbahBarang").modal("show")
+
+    id = $(this).data("id")
+
+    $.ajax({
+        url: 'getDataBarang',
+        type: 'post',
+        data: {id},
+        dataType : 'json',
+        success: function(data) {
+            console.log(data.kodeBarang)
+            $("#idUbahBarang").val(data.id)
+            $("#ubahKodeBarang").val(data.kodeBarang)
+            $("#ubahNamaBarang").val(data.namaBarang)
+            $("#ubahJenisBarang").val(data.jenisBarang)
+            $("#ubahStokBarang").val(data.stokBarang)
+        },
+        error: function(e) {
+            console.log(e)
+        }
+    })
+    
+})
+
 
 

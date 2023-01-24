@@ -80,7 +80,7 @@
                                         <td class="text-xs"><?= $brg->namaBarang; ?></td>
                                         <td class="text-xs"><?= $brg->stokBarang; ?></td>
                                         <td class="text-xs">
-                                            <button class="badge badge-sm bg-gradient-warning tombolUbah" data-id="<?= $brg->id; ?>">Ubah</button>
+                                            <button class="badge badge-sm bg-gradient-warning tombolUbahBarang" data-id="<?= $brg->id; ?>">Ubah</button>
                                             <button class="badge badge-sm bg-gradient-danger tombolHapus" data-id="<?= $brg->id; ?>" data-nama="<?= $brg->namaBarang; ?>">Hapus</button>
                                         </td>
                                     </tr>
@@ -91,6 +91,11 @@
 
                     </div>
 
+
+
+                </div>
+
+                <div class="card-footer">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <li class="page-item disabled">
@@ -105,13 +110,67 @@
                             </li>
                         </ul>
                     </nav>
-
                 </div>
+
+
             </div>
+
+
         </div>
     </div>
 
 
+</div>
+
+
+<div class="modal fade" id="modalUbahBarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Ubah data barang</h5>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <?= form_open('admin/ubahDataBarang'); ?>
+            <div class="modal-body">
+                <input type="hidden" name="idUbahBarang" id="idUbahBarang" style="display: none;">
+                <div class="input-group input-group-outline mb-4">
+                    <div class="col-sm-4">
+                        <label>Kode Barang</label>
+                    </div>
+                    <input type="text" name="ubahKodeBarang" id="ubahKodeBarang" class="form-control" required>
+                </div>
+                <div class="input-group input-group-outline mb-4">
+                    <div class="col-sm-4">
+                        <label>Nama Barang</label>
+                    </div>
+                    <input type="text" name="ubahNamaBarang" id="ubahNamaBarang" class="form-control" required>
+                </div>
+                <div class="input-group input-group-outline mb-4">
+                    <div class="col-sm-4">
+                        <label for="">Jenis Barang</label>
+                    </div>
+                    <select name="ubahJenisBarang" id="ubahJenisBarang" class="form-control" required>
+                        <option value="">-- Pilih Jenis Barang --</option>
+                        <option value="1">Elektronik</option>
+                        <option value="2">Cair</option>
+                    </select>
+                </div>
+                <div class="input-group input-group-outline mb-4">
+                    <div class="col-sm-4">
+                        <label>Jumlah Barang</label>
+                    </div>
+                    <input type="number" name="ubahStokBarang" id="ubahStokBarang" class="form-control" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="submit" id="tombolUbahBarang" class="btn bg-gradient-primary">Ubah Data</button>
+            </div>
+            <?= form_close(); ?>
+        </div>
+    </div>
 </div>
 
 <?= $this->endSection() ?>

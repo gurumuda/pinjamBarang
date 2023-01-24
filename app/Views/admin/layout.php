@@ -561,6 +561,15 @@ $uri = service('uri');; ?>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="/template/myscript/admin.js"></script>
+
+    <?php if (session()->getFlashdata('pesan')) : ?>
+        <script>
+            Swal.fire({
+                icon: '<?= session()->getFlashdata('tipe'); ?>',
+                text: '<?= session()->getFlashdata('pesan'); ?>'
+            })
+        </script>
+    <?php endif; ?>
 </body>
 
 </html>

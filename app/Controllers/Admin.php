@@ -71,4 +71,41 @@ class Admin extends BaseController
         $dataBarang = new ModelDaftarBarang();
         $dataBarang->delete($id);
     }
+
+    public function getDataBarang()
+    {
+        $id = $this->request->getVar('id');
+
+        $dataBarang = new ModelDaftarBarang();
+
+        $barang = $dataBarang
+            ->where('id', $id)
+            ->first();
+
+        echo json_encode($barang);
+    }
+
+    public function ubahDataBarang()
+    {
+        $id = $this->request->getVar('idUbahBarang');
+        $kodeBarang = $this->request->getVar('ubahKodeBarang');
+        $namaBarang = $this->request->getVar('ubahNamaBarang');
+        $jenisBarang = $this->request->getVar('ubahJenisBarang');
+        $stokBarang = $this->request->getVar('ubahStokBarang');
+
+        $data = [
+            'id' => $id,
+            'kodeBarang' => $kodeBarang,
+            'namaBarang' => $namaBarang,
+            'jenisBarang' => $jenisBarang,
+            'stokBarang' => $stokBarang,
+        ];
+
+        $dataBarang = new ModelDaftarBarang();
+
+        $dataBarang->save($data);
+        session()->setFlashdata('tipe', 'success');
+        session()->setFlashdata('pesan', 'Data berhasil diubah');
+        return redirect()->to('admin/daftarBarang');
+    }
 }
