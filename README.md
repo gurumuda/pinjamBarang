@@ -31,5 +31,5 @@ php spark migrate
 
 Isi data default dari untuk menjalankan aplikasi
 ```base
-php spark db:seed DefaulDataSeeder
+php spark db:seed DefaultDataSeeder
 ```
