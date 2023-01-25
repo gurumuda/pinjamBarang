@@ -14,6 +14,7 @@ $("#tombolTambahBarang").on("click", function(){
             success: function(data) {
                 if (data == "1") {
                     ntf("Data berhasil ditambah")
+                    $("#kodeBarang").val('')
                     $("#kodeBarang").focus()
 
                 } else if (data == "2") {
@@ -105,7 +106,7 @@ $(".tombolUbahBarang").on("click", function() {
     id = $(this).data("id")
 
     $.ajax({
-        url: 'getDataBarang',
+        url: '/admin/getDataBarang',
         type: 'post',
         data: {id},
         dataType : 'json',
