@@ -1,4 +1,5 @@
 # Aplikasi pemakaian barang milik sekolah
+[https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white]
 
 Aplikasi ini dibuat untuk mempermudah dalam manajemen dan penggunaan barang milik sekolah
 
