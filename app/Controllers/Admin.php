@@ -50,25 +50,35 @@ class Admin extends BaseController
 
         $dataBarang = new ModelDaftarBarang();
 
-        if ($dataBarang->where('kodeBarang', $kodeBarang)->first()) {
+        $adaKode = $dataBarang
+            ->where('kodeBarang', $kodeBarang)
+            ->first();
+        if ($adaKode) {
             # code...
+            $data = [
+                'id' => $adaKode->id,
+                'stokBarang' => $adaKode->stokBarang + $stokBarang,
+            ];
+
+            $simpan = $dataBarang->save($data);
             echo "2";
             return false;
-        }
-
-        $data = [
-            'kodeBarang' => $kodeBarang,
-            'namaBarang' => $namaBarang,
-            'jenisBarang' => $jenisBarang,
-            'stokBarang' => $stokBarang,
-        ];
-
-        $simpan = $dataBarang->save($data);
-
-        if ($simpan) {
-            echo "1";
         } else {
-            echo "0";
+            # code...
+            $data = [
+                'kodeBarang' => $kodeBarang,
+                'namaBarang' => $namaBarang,
+                'jenisBarang' => $jenisBarang,
+                'stokBarang' => $stokBarang,
+            ];
+
+            $simpan = $dataBarang->save($data);
+
+            if ($simpan) {
+                echo "1";
+            } else {
+                echo "0";
+            }
         }
     }
 

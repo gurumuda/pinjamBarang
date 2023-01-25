@@ -17,7 +17,7 @@ $("#tombolTambahBarang").on("click", function(){
                     $("#kodeBarang").focus()
 
                 } else if (data == "2") {
-                    alt("error", "Data gagal ditambah..", "ada duplikasi kode barang")
+                    alt("error", "Kode Barang Sudah Ada..", "stok barang diperbaharui")
                 }
             },
             error: function(e){
