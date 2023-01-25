@@ -70,11 +70,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $no = 1;
-                                foreach ($barang as $brg) : ?>
+                                <?php foreach ($barang as $brg) : ?>
                                     <tr>
                                         <td class="ps-4 text-xs">
-                                            <?= $no++; ?>
+                                            <?= $nomor++; ?>
                                         </td>
                                         <td class="text-xs"><?= $brg->kodeBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaBarang; ?></td>

@@ -92,12 +92,20 @@ $uri = service('uri');; ?>
                     <h6 class="font-weight-bolder mb-0">Dashboard</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+
+
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                        <div class="input-group input-group-outline">
-                            <label class="form-label">Pencarian...</label>
-                            <input type="text" class="form-control">
-                        </div>
+                        <?php if ($uri->getSegment(2) == 'daftarBarang') : ?>
+                            <?= form_open(''); ?>
+                            <div class="input-group input-group-outline">
+                                <label class="form-label">Pencarian...</label>
+                                <input type="text" name="search" id="search" class="form-control">
+                            </div>
+                            <?= form_close(); ?>
+                        <?php endif; ?>
                     </div>
+
+
                     <ul class="navbar-nav  justify-content-end">
 
 

@@ -5,8 +5,11 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\ModelDaftarBarang;
 
+
 class Admin extends BaseController
 {
+    protected $helpers = ['my_helper', 'form'];
+
     public function index()
     {
         if (!(session()->get('email'))) {
@@ -22,21 +25,31 @@ class Admin extends BaseController
         return redirect()->to('login');
     }
 
+
     public function daftarBarang()
     {
         if (!(session()->get('email'))) {
             return redirect()->to('login');
         }
 
+        $search = $this->request->getPost('search');
+
         $dataBarang = new ModelDaftarBarang();
 
+        if ($search) { //jika ada pencarian barang
+            $barang = $dataBarang
+                ->like('namaBarang', $search)
+                ->paginate(null, 'dataBarang');
+        } else {
+            $barang = $dataBarang
+                ->paginate(6, 'dataBarang');
+        }
+
         $data = [
-            'barang' => $dataBarang->paginate(5, 'dataBarang'),
+            'barang' => $barang,
             'pager' => $dataBarang->pager,
+            'nomor' => nomor($this->request->getVar('page_dataBarang'), 6)
         ];
-
-
-        // $data['barang'] = $dataBarang->findAll();
 
         return view('admin/pages/daftarBarang', $data);
     }
