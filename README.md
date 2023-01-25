@@ -33,5 +33,11 @@ Isi data default dari untuk menjalankan aplikasi
 ```base
 php spark db:seed DefaultDataSeeder
 ```
+
+Jalankan server
+```base
+php spark serve
+```
+
 Dokumentasi pembuatan pada video berikut
 [Video Dokumentasi](https://www.youtube.com/playlist?list=PLCQQ4mSKjCBs2poBOMMUZdCn1mcavcw2i)
