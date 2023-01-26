@@ -3,11 +3,14 @@
 <?= $this->section('content') ?>
 <div class="container-fluid py-4">
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-2 d-grid gap-2">
             <!-- Button trigger modal -->
             <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#modalTambahBarang">
                 Tambah Data
             </button>
+        </div>
+        <div class="col-lg-2 d-grid gap-2">
+            <a class="btn bg-gradient-success" href="">Download</a>
         </div>
 
         <!-- Modal -->
