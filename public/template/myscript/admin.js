@@ -125,5 +125,25 @@ $(".tombolUbahBarang").on("click", function() {
     
 })
 
+ $(document).ready(function(){
+    $("#tambahKategori").on("click", function() {
+        namaKategory = $("#namaKategory").val()
 
+        if (namaKategory != '') {
+            $.ajax({
+                url: '/admin/tambahKategori',
+                type: 'post',
+                data: {namaKategory},
+                success: function(data) {
+                    if (data == '1') {
+                        ntf("Data berhasil ditambah")
+                    }
+                },
+                error: function(e) {
+                    console.log(e)
+                }
+            })
+        }
+    }) 
+ });
 

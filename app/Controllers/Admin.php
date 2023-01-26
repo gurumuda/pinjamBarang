@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ModelDaftarBarang;
+use App\Models\ModelKategori;
 
 
 class Admin extends BaseController
@@ -35,6 +36,7 @@ class Admin extends BaseController
         $search = $this->request->getPost('search');
 
         $dataBarang = new ModelDaftarBarang();
+        $dataKategori = new ModelKategori();
 
         if ($search) { //jika ada pencarian barang
             $barang = $dataBarang
@@ -48,10 +50,24 @@ class Admin extends BaseController
         $data = [
             'barang' => $barang,
             'pager' => $dataBarang->pager,
-            'nomor' => nomor($this->request->getVar('page_dataBarang'), 6)
+            'nomor' => nomor($this->request->getVar('page_dataBarang'), 6),
+            'kategori' => $dataKategori->findAll()
         ];
 
         return view('admin/pages/daftarBarang', $data);
+    }
+
+    public function tambahKategori()
+    {
+        $namaKategory = $this->request->getVar('namaKategory');
+
+        $dataKategori = new ModelKategori();
+
+        $data = ['kategori' => $namaKategory];
+
+        $dataKategori->save($data);
+
+        echo '1';
     }
 
     public function tambahBarang()
