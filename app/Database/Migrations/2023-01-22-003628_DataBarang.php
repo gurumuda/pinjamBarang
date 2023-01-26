@@ -16,7 +16,7 @@ class DataBarang extends Migration
             ],
             'kodeBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '15',
+                'constraint' => '30',
             ],
             'namaBarang' => [
                 'type'       => 'VARCHAR',
