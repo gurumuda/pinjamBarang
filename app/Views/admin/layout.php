@@ -300,6 +300,25 @@ $uri = service('uri');; ?>
             </div>
         </div>
     </div>
+
+
+    <div class="position-fixed top-1 end-1" style="z-index: 100000;">
+        <div class="toast fade hide p-2 mt-2 bg-gradient-info" role="alert" aria-live="assertive" id="infoToast" aria-atomic="true" data-bs-delay="10000">
+            <div class="toast-header bg-transparent border-0">
+                <i class="material-icons text-white me-2">
+                    notifications
+                </i>
+                <span class="me-auto text-white font-weight-bold">Info </span>
+                <small class="text-white">1 second ago</small>
+                <i class="fas fa-times text-md text-white ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+            </div>
+            <hr class="horizontal light m-0">
+            <div class="toast-body text-white">
+                <span id="pesanSukses"></span>
+            </div>
+        </div>
+    </div>
+
     <!--   Core JS Files   -->
     <script src="/template/admin/assets/js/core/popper.min.js"></script>
     <script src="/template/admin/assets/js/core/bootstrap.min.js"></script>
@@ -567,6 +586,8 @@ $uri = service('uri');; ?>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="/template/admin/assets/js/material-dashboard.min.js?v=3.0.4"></script>
     <script src="/template/myscript/jquery-3.6.3.min.js"></script>
+    <script src="/template/admin/assets/js/material-dashboard.min.js?v=3.0.4"></script>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="/template/myscript/admin.js"></script>

@@ -48,18 +48,8 @@ function alt(tipe,judul,teks){
 }
 
 function ntf(teks){
-    Toastify({
-        text: teks,
-        style: {
-            color: "#000",
-            background: "linear-gradient(to right, #b5f5ed, #7ff5e7)",
-            position : "absolute",
-            right : "10px",
-            padding : "10px",
-            borderRadius : "5px",
-            zIndex : "10000"
-        }
-      }).showToast();
+    $('.toast').toast('show');
+    $("#pesanSukses").html(teks)
 }
 
 function konf(nama,id,url){
@@ -147,8 +137,4 @@ $(".tombolCetakBarcode").on("click", function(){
             console.log(e)
         }
     })
-    
-
-    
 })
-
