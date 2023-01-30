@@ -131,7 +131,7 @@
                     <div class="col-sm-4">
                         <label>Kode Barang</label>
                     </div>
-                    <input type="text" name="ubahKodeBarang" id="ubahKodeBarang" class="form-control" required>
+                    <input type="text" readonly name="ubahKodeBarang" id="ubahKodeBarang" class="form-control" required>
                 </div>
                 <div class="input-group input-group-outline mb-2">
                     <div class="col-sm-4">
