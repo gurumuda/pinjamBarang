@@ -34,6 +34,10 @@ class DataBarang extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '4',
             ],
+            'satuan' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '40',
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,

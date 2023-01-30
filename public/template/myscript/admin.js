@@ -5,7 +5,7 @@ $("#tombolTambahBarang").on("click", function(){
     stokBarang = $("#stokBarang").val()
     satuan = $("#satuan").val()
 
-    if (kodeBarang && namaBarang && jenisBarang && stokBarang !="") {
+    if (kodeBarang && namaBarang && jenisBarang && stokBarang !="" && satuan !="") {
         $.ajax({
             url: "/admin/tambahBarang",
             type: "post",
