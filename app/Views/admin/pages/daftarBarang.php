@@ -3,9 +3,6 @@
 <?= $this->section('content') ?>
 <div class="container-fluid py-4">
     <div class="row">
-        <div class="col-lg-2 d-grid">
-            <a class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#modalKategori">Kategori</a>
-        </div>
         <div class="col-lg-2 d-grid gap-2">
             <!-- Button trigger modal -->
             <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#modalTambahBarang">
@@ -38,9 +35,8 @@
                         <div class="input-group input-group-outline mb-4">
                             <select name="jenisBarang" id="jenisBarang" class="form-control">
                                 <option value="">-- Pilih Kategori Barang --</option>
-                                <?php foreach ($kategori as $kate) : ?>
-                                    <option value="<?= $kate->id; ?>"><?= $kate->kategori; ?></option>
-                                <?php endforeach; ?>
+                                <option value="1">Barang Modal</option>
+                                <option value="2">Barang Habis Pakai</option>
                             </select>
                         </div>
                         <div class="input-group input-group-outline mb-4">
@@ -51,56 +47,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
                         <button type="button" id="tombolTambahBarang" class="btn bg-gradient-primary">Tambah Data</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modalKategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Kategori Barang</h5>
-                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group input-group-outline mb-4">
-                            <div class="col-sm-2">
-                                <label>Kategori</label>
-                            </div>
-                            <input type="text" name="namaKategory" id="namaKategory" class="form-control" required>
-                            <button class="ms-2 bg-warning" style="border-radius: 10px; border: none; padding: 0 20px" id="tambahKategori">
-                                Tambah
-                            </button>
-                        </div>
-                        <div class="row ms-2">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 15px;">No</th>
-                                        <th>Nama Kategori</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $no = 1;
-                                    foreach ($kategori as $kat) : ?>
-                                        <tr>
-                                            <td style="text-align: center"><?= $no++; ?></td>
-                                            <td><?= $kat->kategori; ?></td>
-                                            <td>
-                                                <span type="button" class="badge bg-danger">hapus</span>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
                     </div>
                 </div>
             </div>
