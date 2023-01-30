@@ -3,13 +3,14 @@ $("#tombolTambahBarang").on("click", function(){
     namaBarang = $("#namaBarang").val()
     jenisBarang = $("#jenisBarang").val()
     stokBarang = $("#stokBarang").val()
+    satuan = $("#satuan").val()
 
     if (kodeBarang && namaBarang && jenisBarang && stokBarang !="") {
         $.ajax({
             url: "/admin/tambahBarang",
             type: "post",
             data: {
-                kodeBarang, namaBarang, jenisBarang, stokBarang
+                kodeBarang, namaBarang, jenisBarang, stokBarang, satuan
             },
             success: function(data) {
                 if (data == "1") {
@@ -117,6 +118,7 @@ $(".tombolUbahBarang").on("click", function() {
             $("#ubahNamaBarang").val(data.namaBarang)
             $("#ubahJenisBarang").val(data.jenisBarang)
             $("#ubahStokBarang").val(data.stokBarang)
+            $("#ubahSatuan").val(data.satuan)
         },
         error: function(e) {
             console.log(e)

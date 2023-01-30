@@ -43,6 +43,11 @@
                             <label class="form-label">Jumlah Barang</label>
                             <input type="number" name="stokBarang" id="stokBarang" class="form-control">
                         </div>
+                        <div class="input-group input-group-outline">
+                            <label class="form-label">Satuan Jumlah</label>
+                            <input type="text" name="satuan" id="satuan" class="form-control">
+                        </div>
+                        <small class="mb-4" style="font-size: 8pt;">buah, lusin, box, lembar, liter, kg, meter, dll</small>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -69,6 +74,7 @@
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Kode Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Stok</th>
+                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Satuan</th>
                                     <th class="text-uppercase text-secondary text-sm opacity-7 ps-2">Aksi</th>
                                 </tr>
                             </thead>
@@ -81,6 +87,7 @@
                                         <td class="text-xs"><?= $brg->kodeBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaBarang; ?></td>
                                         <td class="text-xs"><?= $brg->stokBarang; ?></td>
+                                        <td class="text-xs"><?= $brg->satuan; ?></td>
                                         <td class="text-xs">
                                             <span type="button" class="badge bg-gradient-warning tombolUbahBarang" data-id="<?= $brg->id; ?>">Ubah</span>
                                             <span type="button" class="badge bg-gradient-danger tombolHapus" data-id="<?= $brg->id; ?>" data-nama="<?= $brg->namaBarang; ?>">Hapus</span>
@@ -119,19 +126,19 @@
             <?= form_open('admin/ubahDataBarang'); ?>
             <div class="modal-body">
                 <input type="hidden" name="idUbahBarang" id="idUbahBarang" style="display: none;">
-                <div class="input-group input-group-outline mb-4">
+                <div class="input-group input-group-outline mb-2">
                     <div class="col-sm-4">
                         <label>Kode Barang</label>
                     </div>
                     <input type="text" name="ubahKodeBarang" id="ubahKodeBarang" class="form-control" required>
                 </div>
-                <div class="input-group input-group-outline mb-4">
+                <div class="input-group input-group-outline mb-2">
                     <div class="col-sm-4">
                         <label>Nama Barang</label>
                     </div>
                     <input type="text" name="ubahNamaBarang" id="ubahNamaBarang" class="form-control" required>
                 </div>
-                <div class="input-group input-group-outline mb-4">
+                <div class="input-group input-group-outline mb-2">
                     <div class="col-sm-4">
                         <label for="">Jenis Barang</label>
                     </div>
@@ -141,11 +148,21 @@
                         <option value="2">Cair</option>
                     </select>
                 </div>
-                <div class="input-group input-group-outline mb-4">
+                <div class="input-group input-group-outline mb-2">
                     <div class="col-sm-4">
                         <label>Jumlah Barang</label>
                     </div>
                     <input type="number" name="ubahStokBarang" id="ubahStokBarang" class="form-control" required>
+                </div>
+                <div class="input-group input-group-outline">
+                    <div class="col-sm-4">
+                        <label>Satuan Jumlah</label>
+                    </div>
+                    <div class="col-sm-8">
+
+                        <input type="text" name="ubahSatuan" id="ubahSatuan" class="form-control" required>
+                        <small class="mb-4" style="font-size: 8pt;">buah, lusin, box, lembar, liter, kg, meter, dll</small>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

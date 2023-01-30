@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ModelDaftarBarang;
-use App\Models\ModelKategori;
 
 
 class Admin extends BaseController
@@ -36,7 +35,6 @@ class Admin extends BaseController
         $search = $this->request->getPost('search');
 
         $dataBarang = new ModelDaftarBarang();
-        $dataKategori = new ModelKategori();
 
         if ($search) { //jika ada pencarian barang
             $barang = $dataBarang
@@ -50,24 +48,10 @@ class Admin extends BaseController
         $data = [
             'barang' => $barang,
             'pager' => $dataBarang->pager,
-            'nomor' => nomor($this->request->getVar('page_dataBarang'), 6),
-            'kategori' => $dataKategori->findAll()
+            'nomor' => nomor($this->request->getVar('page_dataBarang'), 6)
         ];
 
         return view('admin/pages/daftarBarang', $data);
-    }
-
-    public function tambahKategori()
-    {
-        $namaKategory = $this->request->getVar('namaKategory');
-
-        $dataKategori = new ModelKategori();
-
-        $data = ['kategori' => $namaKategory];
-
-        $dataKategori->save($data);
-
-        echo '1';
     }
 
     public function tambahBarang()
@@ -76,6 +60,7 @@ class Admin extends BaseController
         $namaBarang = $this->request->getVar('namaBarang');
         $jenisBarang = $this->request->getVar('jenisBarang');
         $stokBarang = $this->request->getVar('stokBarang');
+        $satuan = $this->request->getVar('satuan');
 
         $dataBarang = new ModelDaftarBarang();
 
@@ -99,6 +84,7 @@ class Admin extends BaseController
                 'namaBarang' => $namaBarang,
                 'jenisBarang' => $jenisBarang,
                 'stokBarang' => $stokBarang,
+                'satuan' => $satuan
             ];
 
             $simpan = $dataBarang->save($data);
@@ -138,6 +124,7 @@ class Admin extends BaseController
         $namaBarang = $this->request->getVar('ubahNamaBarang');
         $jenisBarang = $this->request->getVar('ubahJenisBarang');
         $stokBarang = $this->request->getVar('ubahStokBarang');
+        $satuan = $this->request->getVar('ubahSatuan');
 
         $data = [
             'id' => $id,
@@ -145,6 +132,7 @@ class Admin extends BaseController
             'namaBarang' => $namaBarang,
             'jenisBarang' => $jenisBarang,
             'stokBarang' => $stokBarang,
+            'satuan' => $satuan,
         ];
 
         $dataBarang = new ModelDaftarBarang();
