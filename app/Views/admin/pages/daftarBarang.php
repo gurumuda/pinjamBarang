@@ -91,6 +91,7 @@
                                         <td class="text-xs">
                                             <span type="button" class="badge bg-gradient-warning tombolUbahBarang" data-id="<?= $brg->id; ?>">Ubah</span>
                                             <span type="button" class="badge bg-gradient-danger tombolHapus" data-id="<?= $brg->id; ?>" data-nama="<?= $brg->namaBarang; ?>">Hapus</span>
+                                            <span type="button" class="badge bg-gradient-info tombolCetakBarcode" data-id="<?= $brg->id; ?>">Cetak Barcode</span>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -170,6 +171,32 @@
                 <button type="submit" id="tombolUbahBarang" class="btn bg-gradient-primary">Ubah Data</button>
             </div>
             <?= form_close(); ?>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCetakBarcode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Cetak Barcode</h5>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <img id="imgBarcode" src="" alt="">
+                </div>
+                <br>
+                <label for="">Kode Barang :</label>
+                <span id="kodeBrg"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="submit" id="tombolCetakB" class="btn bg-gradient-primary">Cetak</button>
+            </div>
+
         </div>
     </div>
 </div>

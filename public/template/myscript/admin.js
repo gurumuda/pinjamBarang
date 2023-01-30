@@ -95,7 +95,7 @@ function konf(nama,id,url){
 
 $('#modalTambahBarang').on('hidden.bs.modal', function () {
     document.location.reload();
-  })
+})
 
 $("#modalTambahBarang").on("shown.bs.modal", function () { 
     $("#kodeBarang").focus()
@@ -103,9 +103,7 @@ $("#modalTambahBarang").on("shown.bs.modal", function () {
 
 $(".tombolUbahBarang").on("click", function() {
     $("#modalUbahBarang").modal("show")
-
     id = $(this).data("id")
-
     $.ajax({
         url: '/admin/getDataBarang',
         type: 'post',
@@ -124,6 +122,32 @@ $(".tombolUbahBarang").on("click", function() {
             console.log(e)
         }
     })
+    
+})
+
+$(".tombolCetakBarcode").on("click", function(){
+    id = $(this).data("id")
+    
+    $.ajax({
+        url: '/admin/generateBarcode',
+        type: 'post',
+        data: {id},
+        dataType: 'json',
+        success: function(data)
+        {           
+            setTimeout(() => {
+                $("#modalCetakBarcode").modal("show")
+                $("#kodeBrg").html(data.kodeBarang)
+                $('#imgBarcode').attr('src', '/barcode/'+data.fileBarcode);
+            }, 3000);
+        },
+        error: function(e)
+        {
+            console.log(e)
+        }
+    })
+    
+
     
 })
 

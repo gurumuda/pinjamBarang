@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ModelDaftarBarang;
+use Picqer;
 
 
 class Admin extends BaseController
@@ -141,5 +142,38 @@ class Admin extends BaseController
         session()->setFlashdata('tipe', 'success');
         session()->setFlashdata('pesan', 'Data berhasil diubah');
         return redirect()->to('admin/daftarBarang');
+    }
+
+    public function generateBarcode()
+    {
+        helper('text');
+        $id = $this->request->getVar('id');
+        $dataBarang = new ModelDaftarBarang();
+        $barang = $dataBarang
+            ->where('id', $id)
+            ->first();
+
+        $file = file_exists('./barcode/' . $barang->fileBarcode);
+
+        $fileBarcode = random_string('alpha', 20);
+
+        $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+
+
+        if (!$file || $barang->fileBarcode == '') {
+
+            $prosesGenerate = file_put_contents('./barcode/' . $fileBarcode . '.png', $generator->getBarcode($barang->kodeBarang, $generator::TYPE_CODE_128, 3, 50));
+
+            $data = [
+                'id' => $id,
+                'fileBarcode' => $fileBarcode . '.png'
+            ];
+
+            $dataBarang->save($data);
+        }
+        $barang2 = $dataBarang
+            ->where('id', $id)
+            ->first();
+        echo json_encode($barang2);
     }
 }

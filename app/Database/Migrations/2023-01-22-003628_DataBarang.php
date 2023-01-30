@@ -18,6 +18,10 @@ class DataBarang extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '30',
             ],
+            'fileBarcode' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '40',
+            ],
             'namaBarang' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '50',
