@@ -137,6 +137,7 @@ $(".tombolCetakBarcode").on("click", function(){
         {           
             setTimeout(() => {
                 $("#modalCetakBarcode").modal("show")
+                $("#idBarcode").val(data.id)
                 $("#kodeBrg").html(data.kodeBarang)
                 $('#imgBarcode').attr('src', '/barcode/'+data.fileBarcode);
             }, 3000);

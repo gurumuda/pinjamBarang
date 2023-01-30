@@ -176,4 +176,18 @@ class Admin extends BaseController
             ->first();
         echo json_encode($barang2);
     }
+
+    public function printBarcode()
+    {
+        $id = $this->request->getVar('idBarcode');
+        $data['jumlah'] = $jumlah = $this->request->getVar('jumlah');
+        if ($jumlah == '' || $jumlah <= 0) {
+            $jumlah = 1;
+        }
+        $data['jumlah'] = $jumlah;
+
+        $dataBarang = new ModelDaftarBarang();
+        $data['barang'] = $dataBarang->where('id', $id)->first();
+        return view('admin/pages/printBarcode', $data);
+    }
 }

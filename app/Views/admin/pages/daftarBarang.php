@@ -184,6 +184,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <?= form_open('/admin/printBarcode', 'target="_blank"'); ?>
+            <input type="hidden" name="idBarcode" id="idBarcode">
             <div class="modal-body">
                 <div>
                     <img id="imgBarcode" src="" alt="">
@@ -191,11 +193,19 @@
                 <br>
                 <label for="">Kode Barang :</label>
                 <span id="kodeBrg"></span>
+                <hr>
+                <div class="row">
+                    <label for="">Jumlah Cetak</label>
+                    <div class="input-group input-group-outline">
+                        <input type="number" name="jumlah" class="form-control">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
                 <button type="submit" id="tombolCetakB" class="btn bg-gradient-primary">Cetak</button>
             </div>
+            <?= form_close(); ?>
 
         </div>
     </div>
