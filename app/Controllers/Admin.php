@@ -147,6 +147,7 @@ class Admin extends BaseController
     public function generateBarcode()
     {
         helper('text');
+        helper('filesystem');
         $id = $this->request->getVar('id');
         $dataBarang = new ModelDaftarBarang();
         $barang = $dataBarang
@@ -162,7 +163,7 @@ class Admin extends BaseController
 
         if (!$file || $barang->fileBarcode == '') {
 
-            $prosesGenerate = file_put_contents('./barcode/' . $fileBarcode . '.png', $generator->getBarcode($barang->kodeBarang, $generator::TYPE_CODE_128, 3, 50));
+            $prosesGenerate = write_file('./barcode/' . $fileBarcode . '.png', $generator->getBarcode($barang->kodeBarang, $generator::TYPE_CODE_128, 3, 50));
 
             $data = [
                 'id' => $id,
