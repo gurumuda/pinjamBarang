@@ -44,8 +44,8 @@
                     </span> -->
                 <br>
                 <div class="wrap-input100 validate-input" data-validate="Masukkan email valid">
-                    <input class="input100" type="text" name="email" autofocus>
-                    <span class="focus-input100" data-placeholder="Email"></span>
+                    <input class="input100" type="text" name="email" id="email" autofocus>
+                    <span id="labelEmail" class="focus-input100" data-placeholder="Email"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Masukkan kata sandi">
@@ -84,7 +84,7 @@
     <div id="dropDownSelect1"></div>
 
     <!--===============================================================================================-->
-    <script src="/template/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="/template/login/js/jquery-3.6.3.js"></script>
     <!--===============================================================================================-->
     <script src="/template/login/vendor/animsition/js/animsition.min.js"></script>
     <!--===============================================================================================-->
@@ -99,6 +99,7 @@
     <script src="/template/login/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
     <script src="/template/login/js/main.js"></script>
+
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <?php if (session()->getFlashdata('pesan')) : ?>
