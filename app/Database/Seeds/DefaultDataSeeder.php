@@ -12,6 +12,7 @@ class DefaultDataSeeder extends Seeder
             'email' => 'admin@admin.com',
             'pass' => '$2y$10$QVvjgFGdNELuJIggL3IO0.BLqhWXvAw8keQP49yhzYWgYO/BPOj5O',
             'nama' => 'Administrator',
+            'level' => '2'
 
         ];
 

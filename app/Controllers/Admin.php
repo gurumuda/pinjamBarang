@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\ModelDaftarBarang;
 use App\Models\ModelDataPinjamBarang;
+use App\Models\ModelDaftarPesanan;
 use Picqer;
 
 
@@ -15,7 +16,7 @@ class Admin extends BaseController
 
     public function index()
     {
-        if (!(session()->get('email'))) {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
             return redirect()->to('login');
         }
 
@@ -24,6 +25,10 @@ class Admin extends BaseController
 
     public function getDataPjBr()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $kodeBarang = $this->request->getVar('kodeBarang');
 
         $dataBarang = new ModelDaftarBarang();
@@ -38,6 +43,10 @@ class Admin extends BaseController
 
     public function prosesPinjamBarangModal()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $kodeBarang = $this->request->getVar('pjKodeBarang');
         $namaPeminjam = $this->request->getVar('namaPeminjam');
         $jumlahBarang = $this->request->getVar('jumlahBarang');
@@ -83,7 +92,7 @@ class Admin extends BaseController
 
     public function daftarBarang()
     {
-        if (!(session()->get('email'))) {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
             return redirect()->to('login');
         }
 

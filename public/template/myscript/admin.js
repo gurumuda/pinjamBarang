@@ -171,7 +171,7 @@ $("#jumlahBarang").on("change", function() {
     } else if (jumlahBarang > pjStokBarang) {
         $("#tombolSimpanPinjamBarang").attr("disabled","disabled");
         alert('Stok barang tidak cukup')
-    } else if (jumlahBarang > 0 && jumlahBarang < pjStokBarang) {
+    } else {
         $("#tombolSimpanPinjamBarang").removeAttr("disabled");
     }
     

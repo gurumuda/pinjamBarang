@@ -30,9 +30,17 @@ class Login extends BaseController
             if (password_verify($pass, $cek->pass)) {
                 # Jika password benar
 
-                session()->set('email', $email);
-
-                return redirect()->to('admin');
+                if ($cek->level == '2') {
+                    # code...
+                    session()->set('email', $email);
+                    session()->set('level', 'adm');
+                    return redirect()->to('admin');
+                } else {
+                    # code...
+                    session()->set('email', $email);
+                    session()->set('level', 'usr');
+                    return redirect()->to('user');
+                }
             } else {
                 # Jika password salah
                 session()->setFlashdata('pesan', 'Password yang anda masukkan salah');

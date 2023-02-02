@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Pengguna extends Migration
+class DaftarPesanan extends Migration
 {
     public function up()
     {
@@ -14,21 +14,30 @@ class Pengguna extends Migration
                 'constraint'     => 11,
                 'auto_increment' => true,
             ],
-            'email' => [
+            'namaBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '30',
+                'constraint' => '50',
             ],
-            'pass' => [
+            'namaPeminjam' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '70',
+                'constraint' => '50',
             ],
-            'nama' => [
+            'jumlahBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '30',
+                'constraint' => '10',
             ],
-            'level' => [
-                'type'       => 'ENUM("1","2")',
-                'default' => '1',
+            'tanggalPinjam' => [
+                'type'       => 'DATE'
+            ],
+            'waktuPinjam' => [
+                'type'       => 'TIME',
+            ],
+            'status' => [
+                'type'  => 'ENUM("0","1")',
+                'default'   => "0"
+            ],
+            'keperluan' => [
+                'type'       => 'TEXT',
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -40,12 +49,11 @@ class Pengguna extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addUniqueKey('email', 'index');
-        $this->forge->createTable('pengguna');
+        $this->forge->createTable('daftarPesanan');
     }
 
     public function down()
     {
-        $this->forge->dropTable('pengguna');
+        $this->forge->dropTable('daftarPesanan');
     }
 }
