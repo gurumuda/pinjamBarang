@@ -38,6 +38,7 @@ $uri = service('uri');; ?>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="/template/admin/assets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+    <link rel="stylesheet" href="/template/myscript/datetimepicker-master/jquery.datetimepicker.css" />
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -325,6 +326,7 @@ $uri = service('uri');; ?>
     <script src="/template/admin/assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="/template/admin/assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="/template/admin/assets/js/plugins/chartjs.min.js"></script>
+
     <script>
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
@@ -586,6 +588,8 @@ $uri = service('uri');; ?>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="/template/admin/assets/js/material-dashboard.min.js?v=3.0.4"></script>
     <script src="/template/myscript/jquery-3.6.3.min.js"></script>
+    <script src="/template/myscript/datetimepicker-master/jquery.datetimepicker.full.js"></script>
+    <script src="/template/myscript/datetimepicker-master/jquery.datetimepicker.js"></script>
     <script src="/template/admin/assets/js/material-dashboard.min.js?v=3.0.4"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -600,6 +604,16 @@ $uri = service('uri');; ?>
             })
         </script>
     <?php endif; ?>
+    <script>
+        /*jslint browser:true*/
+        /*global jQuery, document*/
+
+        jQuery(document).ready(function() {
+            'use strict';
+
+            jQuery('#filter-date, #search-from-date, #search-to-date').datetimepicker();
+        });
+    </script>
 </body>
 
 </html>

@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ModelDaftarBarang;
+use App\Models\ModelDataPinjamBarang;
 use Picqer;
+
 
 
 class Admin extends BaseController
@@ -18,6 +20,58 @@ class Admin extends BaseController
         }
 
         return view('admin/pages/dashboard');
+    }
+
+    public function getDataPjBr()
+    {
+        $kodeBarang = $this->request->getVar('kodeBarang');
+
+        $dataBarang = new ModelDaftarBarang();
+        $data = $dataBarang->where('kodeBarang', $kodeBarang)->first();
+
+        if ($data) {
+            echo (json_encode($data));
+        } else {
+            echo (json_encode('0'));
+        }
+    }
+
+    public function prosesPinjamBarangModal()
+    {
+        $kodeBarang = $this->request->getVar('pjKodeBarang');
+        $namaPeminjam = $this->request->getVar('namaPeminjam');
+        $jumlahBarang = $this->request->getVar('jumlahBarang');
+        $waktu = $this->request->getVar('waktu');
+        $keperluan = $this->request->getVar('keperluan');
+
+        $tanggalPinjam = (explode(' ', $waktu))[0];
+        $waktuPinjam = (explode(' ', $waktu))[1];
+
+        $dataPinjamBarang = new ModelDataPinjamBarang();
+
+        $data = [
+            'kodeBarang' => $kodeBarang,
+            'namaPeminjam' => $namaPeminjam,
+            'jumlahBarang' => $jumlahBarang,
+            'tanggalPinjam' => $tanggalPinjam,
+            'waktuPinjam' => $waktuPinjam,
+            'keperluan' => $keperluan,
+        ];
+        $simpan = $dataPinjamBarang->save($data);
+        if ($simpan) {
+            $dataBarang = new ModelDaftarBarang();
+            $upd = $dataBarang->where('kodeBarang', $kodeBarang)->first();
+            $data2 = [
+                'id' => $upd->id,
+                'stokBarang' => $upd->stokBarang - $jumlahBarang,
+            ];
+
+            session()->setFlashdata('tipe', 'success');
+            session()->setFlashdata('pesan', 'Data berhasil disimpan');
+            $dataBarang->save($data2);
+        }
+
+        return redirect()->to('admin');
     }
 
     public function logout()

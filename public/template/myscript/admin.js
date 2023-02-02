@@ -138,3 +138,41 @@ $(".tombolCetakBarcode").on("click", function(){
         }
     })
 })
+
+$("#pjKodeBarang").on("change", function() {
+    kodeBarang = $(this).val()
+    
+    $.ajax({
+        url: '/admin/getDataPjBr',
+        type: 'post',
+        data: {kodeBarang},
+        dataType: 'json',
+        success: function(data)
+        {
+            if (data != '0') {
+                $("#pjNamaBarang").val(data.namaBarang)
+                $("#pjStokBarang").val(data.stokBarang)
+            } else {
+                $("#pjNamaBarang").val('')
+                $("#pjStokBarang").val('')
+            }
+        },
+        error: function(e) {
+            console.log(e)
+        }
+    })
+})
+$("#jumlahBarang").on("change", function() {
+    pjStokBarang = $("#pjStokBarang").val()
+    jumlahBarang = $(this).val()
+    if (jumlahBarang < 1) {
+        $("#tombolSimpanPinjamBarang").attr("disabled","disabled");
+        alert('Minimal jumlah pinjam adalah 1')
+    } else if (jumlahBarang > pjStokBarang) {
+        $("#tombolSimpanPinjamBarang").attr("disabled","disabled");
+        alert('Stok barang tidak cukup')
+    } else if (jumlahBarang > 0 && jumlahBarang < pjStokBarang) {
+        $("#tombolSimpanPinjamBarang").removeAttr("disabled");
+    }
+    
+})
