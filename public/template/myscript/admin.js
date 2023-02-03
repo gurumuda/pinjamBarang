@@ -109,6 +109,7 @@ $(".tombolUbahBarang").on("click", function () {
       $("#ubahNamaBarang").val(data.namaBarang);
       $("#ubahJenisBarang").val(data.jenisBarang);
       $("#ubahStokBarang").val(data.stokBarang);
+      $("#ubahJmlDimiliki").val(data.jmlDimiliki);
       $("#ubahSatuan").val(data.satuan);
     },
     error: function (e) {
@@ -207,14 +208,27 @@ $(".tmbUbahStatusPesanan").on("click", function () {
 });
 
 $(".tbmProsesPesanan").on("click", function () {
-  idP = $(this).data("idP");
+  idp = $(this).data("idp");
 
   $.ajax({
     url: "/admin/getJenisBarang",
     type: "post",
-    data: { idP },
+    data: { idp },
+    dataType: "json",
     success: function (data) {
       console.log(data);
+
+      if (data.jenisBarang == "1") {
+        $("#modalPinjamBarangModal").modal("show");
+        $("#pjKodeBarang").val(data.kodeBarang);
+        $("#pjNamaBarang").val(data.namaBarang);
+        $("#pjStokBarang").val(data.stokBarang);
+        $("#namaPeminjam").val(data.nama);
+        $("#jumlahBarang").val(data.jumlahBarang);
+        $("#keperluan").val(data.keperluan);
+      }
+      if (data.jenisBarang == "2") {
+      }
     },
     error: function (e) {
       console.log(e);

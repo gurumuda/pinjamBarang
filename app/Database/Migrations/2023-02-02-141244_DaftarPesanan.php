@@ -33,8 +33,9 @@ class DaftarPesanan extends Migration
                 'type'       => 'TIME',
             ],
             'status' => [
-                'type'  => 'ENUM("0","1")',
-                'default'   => "0"
+                'type'  => 'ENUM("0","1","2")',
+                'default'   => "0",
+                'comments' => "0=blm diambil, 1=diambil, 2=kembali"
             ],
             'keperluan' => [
                 'type'       => 'TEXT',

@@ -45,16 +45,16 @@ class Admin extends BaseController
 
     public function getJenisBarang()
     {
-        $idP = $this->request->getVar('idP');
+        $idP = $this->request->getVar('idp');
         $dataPesanan = new ModelDaftarPesanan();
 
-        $jenisBarang = $dataPesanan
-            ->join('dataBarang', 'dataBarang.id = daftarPesanan.idBarang', 'LEFT')
+        $jenis = $dataPesanan
+            ->join('pengguna', 'pengguna.id = daftarPesanan.idPemesan')
+            ->join('dataBarang', 'dataBarang.id = daftarPesanan.idBarang')
             ->where('daftarPesanan.id', $idP)
-            ->first()->jenisBarang;
+            ->first();
 
-
-        echo $jenisBarang;
+        echo json_encode($jenis);
     }
 
     public function getDataPjBr()
@@ -170,6 +170,7 @@ class Admin extends BaseController
             $data = [
                 'id' => $adaKode->id,
                 'stokBarang' => $adaKode->stokBarang + $stokBarang,
+                'jmlDimiliki' => $adaKode->jmlDimiliki + $stokBarang,
             ];
 
             $simpan = $dataBarang->save($data);
@@ -182,6 +183,7 @@ class Admin extends BaseController
                 'namaBarang' => $namaBarang,
                 'jenisBarang' => $jenisBarang,
                 'stokBarang' => $stokBarang,
+                'jmlDimiliki' => $stokBarang,
                 'satuan' => $satuan
             ];
 
@@ -200,6 +202,21 @@ class Admin extends BaseController
         $id = $this->request->getVar("id");
         $dataBarang = new ModelDaftarBarang();
         $dataBarang->delete($id);
+    }
+
+    public function hapusSemua()
+    {
+        $id = $this->request->getVar('hapus');
+
+        $dataBarang = new ModelDaftarBarang();
+        $dataPinjamBarang = new ModelDataPinjamBarang();
+
+        foreach ($id as $idHapus) {
+            $dataBarang->delete($idHapus);
+        }
+        session()->setFlashdata('tipe', 'success');
+        session()->setFlashdata('pesan', 'Data berhasil dihapus');
+        return redirect()->back();
     }
 
     public function getDataBarang()
@@ -222,6 +239,7 @@ class Admin extends BaseController
         $namaBarang = $this->request->getVar('ubahNamaBarang');
         $jenisBarang = $this->request->getVar('ubahJenisBarang');
         $stokBarang = $this->request->getVar('ubahStokBarang');
+        $jmlDimiliki = $this->request->getVar('ubahJmlDimiliki');
         $satuan = $this->request->getVar('ubahSatuan');
 
         $data = [
@@ -230,6 +248,7 @@ class Admin extends BaseController
             'namaBarang' => $namaBarang,
             'jenisBarang' => $jenisBarang,
             'stokBarang' => $stokBarang,
+            'jmlDimiliki' => $jmlDimiliki,
             'satuan' => $satuan,
         ];
 
