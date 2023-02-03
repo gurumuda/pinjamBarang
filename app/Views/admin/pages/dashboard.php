@@ -84,7 +84,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Pinjam</label>
-                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu pinjam">
+                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu pinjam" required>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -162,7 +162,7 @@
                                             <td class="text-xs">
                                                 <span type="button" class="badge bg-success tmbUbahStatusPesanan" data-id="<?= $ps->idP; ?>" data-nama="<?= $ps->namaBarang; ?>" data-pemesan="<?= $ps->nama; ?>">Sudah</span>
 
-                                                <span data-idP="<?= $ps->idP; ?>" type="button" class="badge bg-danger tbmProsesPesanan">Proses Pesanan</span>
+                                                <span data-idp="<?= $ps->idP; ?>" type="button" class="badge bg-danger tbmProsesPesanan">Proses Pesanan</span>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
