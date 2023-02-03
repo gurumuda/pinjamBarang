@@ -37,7 +37,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Pinjam Barang</h5>
+                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Pesan Barang</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -49,7 +49,7 @@
                             <label for="" class="col-4">Nama Barang</label>
                             <select class="form-control" id="mySelect2" name="pjIdBarang">
                                 <option value="">Pilih nama barang</option>
-                                <?php foreach ($barang as $bara) : ?>
+                                <?php foreach ($barangStok as $bara) : ?>
                                     <option value="<?= $bara->id; ?>"><?= $bara->namaBarang; ?></option>
                                 <?php endforeach; ?>
                             </select>
@@ -59,7 +59,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Jumlah Barang</label>
-                            <input type="number" name="jumlahBarang" id="jumlahBarang" class="form-control" placeholder="Masukkan jumlah barang yang dipinjam">
+                            <input type="number" name="jumlahBarang" id="jumlahBarang" class="form-control" placeholder="Masukkan jumlah barang">
                         </div>
                     </div>
                     <div class="row mb-2">
