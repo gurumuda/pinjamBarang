@@ -21,8 +21,19 @@
         </div>
     </div>
 
+    <style>
+        #mySelect2 {
+            width: 307px;
+        }
 
-    <div class="modal fade" id="modalPinjamBarangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        @media only screen and (max-width: 540px) {
+            #mySelect2 {
+                width: 265px;
+            }
+        }
+    </style>
+
+    <div class="modal fade" id="modalPinjamBarangModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -31,30 +42,18 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <?= form_open('/admin/prosesPinjamBarangModal'); ?>
+                <?= form_open('/user/prosesInden'); ?>
                 <div class="modal-body">
                     <div class="row mb-2">
-                        <div class="input-group input-group-outline">
-                            <label for="" class="col-4">Kode Barang</label>
-                            <input type="text" name="pjKodeBarang" id="pjKodeBarang" class="form-control" placeholder="Masukkan Kode Barang">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="input-group input-group-outline">
+                        <div class="input-group input-group-outline" id="aa">
                             <label for="" class="col-4">Nama Barang</label>
-                            <input type="text" readonly name="pjNamaBarang" id="pjNamaBarang" class="form-control" placeholder="Auto Load">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="input-group input-group-outline">
-                            <label for="" class="col-4">Stok Barang</label>
-                            <input type="text" readonly name="pjStokBarang" id="pjStokBarang" class="form-control" placeholder="Auto Load">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="input-group input-group-outline">
-                            <label for="" class="col-4">Nama Peminjam</label>
-                            <input type="text" name="namaPeminjam" id="namaPeminjam" class="form-control" placeholder="Masukkan nama peminjam">
+                            <select class="form-control" id="mySelect2" name="pjIdBarang">
+                                <option value="">Pilih nama barang</option>
+                                <?php foreach ($barang as $bara) : ?>
+                                    <option value="<?= $bara->id; ?>"><?= $bara->namaBarang; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -65,7 +64,7 @@
                     </div>
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
-                            <label for="" class="col-4">Waktu Pinjam</label>
+                            <label for="" class="col-4">Waktu Ambil</label>
                             <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu pinjam">
                         </div>
                     </div>
@@ -76,6 +75,7 @@
                         </div>
                     </div>
                 </div>
+                <small class="ms-3 text-info">Pastikan mengecek stok barang sebelum melakukan pesanan</small>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
                     <button type="submit" id="tombolSimpanPinjamBarang" class="btn bg-gradient-primary">Simpan</button>
@@ -96,74 +96,34 @@
 
                 </div>
                 <div class="card-body px-0 pb-2">
-                    <div class="table-responsive">
-                        <table class="table align-items-center mb-0">
+                    <div class="table-responsive p-3">
+                        <table class="table align-items-center" id="example">
                             <thead>
                                 <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Pemesan</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keperluan</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Waktu</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Satuan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div>
-                                                <img src="/template/admin/assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
-                                            </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Material XD Version</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="avatar-group mt-2">
-                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                                <img src="/template/admin/assets/img/team-1.jpg" alt="team1">
-                                            </a>
-                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                                <img src="/template/admin/assets/img/team-2.jpg" alt="team2">
-                                            </a>
-                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                                                <img src="/template/admin/assets/img/team-3.jpg" alt="team3">
-                                            </a>
-                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                                <img src="/template/admin/assets/img/team-4.jpg" alt="team4">
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <span class="text-xs font-weight-bold"> $14,000 </span>
-                                    </td>
-                                    <td class="align-middle">
-                                        <div class="progress-wrapper w-75 mx-auto">
-                                            <div class="progress-info">
-                                                <div class="progress-percentage">
-                                                    <span class="text-xs font-weight-bold">60%</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <div class="progress-wrapper w-75 mx-auto">
-                                            <div class="progress-info">
-                                                <div class="progress-percentage">
-                                                    <span class="text-xs font-weight-bold">60%</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
+                                <?php $no = 1;
+                                foreach ($barang as $brg) : ?>
+                                    <tr>
+                                        <td class="align-middle text-center text-sm">
+                                            <?= $no++; ?>
+                                        </td>
+                                        <td class="align-middle text-sm">
+                                            <?= $brg->namaBarang; ?>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <?= $brg->stokBarang; ?>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <?= $brg->satuan; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
