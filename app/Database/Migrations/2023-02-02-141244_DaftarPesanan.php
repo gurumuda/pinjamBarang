@@ -26,10 +26,10 @@ class DaftarPesanan extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '10',
             ],
-            'tanggalPinjam' => [
+            'tanggalPakai' => [
                 'type'       => 'DATE'
             ],
-            'waktuPinjam' => [
+            'waktuPakai' => [
                 'type'       => 'TIME',
             ],
             'status' => [
