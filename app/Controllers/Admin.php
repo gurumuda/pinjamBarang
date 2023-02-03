@@ -20,7 +20,41 @@ class Admin extends BaseController
             return redirect()->to('login');
         }
 
-        return view('admin/pages/dashboard');
+        $dataPesanan = new ModelDaftarPesanan();
+        $dataBarang = new ModelDaftarBarang();
+
+        $data['pesanan'] = $dataPesanan
+            ->select('*, dataBarang.id as idB, daftarPesanan.id as idP, daftarPesanan.keperluan as kepPesanan')
+            ->join('dataBarang', 'dataBarang.id = daftarPesanan.idBarang', 'LEFT')
+            ->join('pengguna', 'pengguna.id = daftarPesanan.idPemesan', 'LEFT')
+            ->where('status', '0')
+            ->orderBy('idP', 'DESC')
+            ->findAll();
+
+        return view('admin/pages/dashboard', $data);
+    }
+
+    public function ubahStatusPesanan()
+    {
+        # code...
+        $id = $this->request->getVar('id');
+        $dataPesanan = new ModelDaftarPesanan();
+        $data = ['id' => $id, 'status' => '1'];
+        $dataPesanan->save($data);
+    }
+
+    public function getJenisBarang()
+    {
+        $idP = $this->request->getVar('idP');
+        $dataPesanan = new ModelDaftarPesanan();
+
+        $jenisBarang = $dataPesanan
+            ->join('dataBarang', 'dataBarang.id = daftarPesanan.idBarang', 'LEFT')
+            ->where('daftarPesanan.id', $idP)
+            ->first()->jenisBarang;
+
+
+        echo $jenisBarang;
     }
 
     public function getDataPjBr()
