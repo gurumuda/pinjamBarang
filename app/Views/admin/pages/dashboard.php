@@ -2,6 +2,12 @@
 
 <?= $this->section('content') ?>
 
+<style>
+    label {
+        color: black;
+    }
+</style>
+
 <div class="container-fluid py-4">
     <div class="row">
 
@@ -16,8 +22,7 @@
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
                     <button class="btn bg-warning text-white" data-bs-toggle="modal" data-bs-target="#modalPinjamBarangModal"><i class="material-icons opacity-10 text-white">input</i> Pinjam</button>
-                    <button class="btn bg-success text-white" data-bs-toggle="modal" data-bs-target="#modalPinjamBarangModal"><i class="material-icons opacity-10 text-white">input</i> Kembali</button>
-
+                    <button class="btn bg-success text-white" data-bs-toggle="modal" data-bs-target="#modalKembaliBarangModal"><i class="material-icons opacity-10 text-white">input</i> Kembali</button>
                 </div>
             </div>
         </div>
@@ -42,7 +47,7 @@
 
     <div class="modal fade" id="modalPinjamBarangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="background-color: rgb(255, 255, 0);">
                 <div class="modal-header">
                     <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Pinjam Barang</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
@@ -50,6 +55,8 @@
                     </button>
                 </div>
                 <?= form_open('/admin/prosesPinjamBarangModal'); ?>
+                <input type="hidden" name="pjIdBarang" id="pjIdBarang" style="display: none;">
+                <input type="hidden" name="pjIdPinjaman" id="pjIdPinjaman" style="display: none;">
                 <div class="modal-body">
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
@@ -91,6 +98,68 @@
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Keperluan</label>
                             <textarea name="keperluan" id="keperluan" class="form-control" rows="3" placeholder="Masukkan keperluan (Contoh: Pembelajaran, Ekstrakurikuler, Rapat, Dll)"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" id="tombolSimpanPinjamBarang" class="btn bg-gradient-primary">Simpan</button>
+                </div>
+                <?= form_close(); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade " id="modalKembaliBarangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+            <div class="modal-content" style="background-color: chartreuse;">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Kembalikan Barang</h5>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?= form_open('/admin/prosesKembaliBarangModal'); ?>
+                <input type="hidden" name="kbIdBarang" id="kbIdBarang" style="display: none;">
+                <input type="hidden" name="kbIdPinjaman" id="kbIdPinjaman" style="display: none;">
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Kode Barang</label>
+                            <input type="text" name="kbKodeBarang" id="kbKodeBarang" class="form-control" placeholder="Masukkan Kode Barang">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nama Peminjam</label>
+                            <select name="kbNamaPeminjam" id="kbNamaPeminjam" class="form-control">
+                                <option value="">-- Masukkan kode barang --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nama Barang</label>
+                            <input type="text" readonly name="kbNamaBarang" id="kbNamaBarang" class="form-control" placeholder="Auto Load">
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nama Mengembalikan</label>
+                            <input type="text" name="namaKembali" id="namaKembali" class="form-control" placeholder="Masukkan nama yang mengembalikan">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Jumlah Barang</label>
+                            <input type="number" name="jumlahBarangKembali" id="jumlahBarangKembali" class="form-control" placeholder="Masukkan jumlah barang yang kembali">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Waktu Kembali</label>
+                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu kembali" required>
                         </div>
                     </div>
                 </div>
@@ -168,7 +237,7 @@
                                     <?php endforeach; ?>
                                 <?php else : ?>
                                     <tr>
-                                        <td colspan="7" class="text-center text-secondary font-weight-bolder opacity-7">
+                                        <td colspan="9" class="text-center text-secondary font-weight-bolder opacity-7">
                                             Tidak ada data pesanan
                                         </td>
                                     </tr>

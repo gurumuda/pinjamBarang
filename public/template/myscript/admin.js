@@ -1,3 +1,4 @@
+// Jika tombol tambah barang di klik maka jalankan kode berikut
 $("#tombolTambahBarang").on("click", function () {
   kodeBarang = $("#kodeBarang").val();
   namaBarang = $("#namaBarang").val();
@@ -40,6 +41,7 @@ $("#tombolTambahBarang").on("click", function () {
   }
 });
 
+// Jika tombol hapus satu barang di klik maka jalankan kode berikut
 $(".tombolHapus").on("click", function () {
   id = $(this).data("id");
   nama = $(this).data("nama");
@@ -59,6 +61,7 @@ function ntf(teks) {
   $("#pesanSukses").html(teks);
 }
 
+// Function konfirmasi hapus data berdasarkan ID yang diinput degan ajax
 function konf(nama, id, url) {
   Swal.fire({
     title: "Anda yakin menghapus data?",
@@ -86,14 +89,20 @@ function konf(nama, id, url) {
   });
 }
 
-$("#modalTambahBarang").on("hidden.bs.modal", function () {
-  document.location.reload();
-});
+// Jika modal ditutup maka jalankan reload halaman tersebut
+$("#modalTambahBarang, #modalPinjamBarangModal").on(
+  "hidden.bs.modal",
+  function () {
+    document.location.reload();
+  }
+);
 
+// Jika modal tambah barang dibuka, kursor mengarah ke input kodebarang
 $("#modalTambahBarang").on("shown.bs.modal", function () {
   $("#kodeBarang").focus();
 });
 
+// Jika tombol ubah barang di klik, maka jalankan kode berikut
 $(".tombolUbahBarang").on("click", function () {
   $("#modalUbahBarang").modal("show");
   id = $(this).data("id");
@@ -103,7 +112,6 @@ $(".tombolUbahBarang").on("click", function () {
     data: { id },
     dataType: "json",
     success: function (data) {
-      console.log(data.kodeBarang);
       $("#idUbahBarang").val(data.id);
       $("#ubahKodeBarang").val(data.kodeBarang);
       $("#ubahNamaBarang").val(data.namaBarang);
@@ -118,6 +126,7 @@ $(".tombolUbahBarang").on("click", function () {
   });
 });
 
+// Jika tombol cetak barcode masing-masing barang di klik
 $(".tombolCetakBarcode").on("click", function () {
   id = $(this).data("id");
 
@@ -140,6 +149,7 @@ $(".tombolCetakBarcode").on("click", function () {
   });
 });
 
+// Jika kode barang pada modal proses pinjam barang modal di isi
 $("#pjKodeBarang").on("change", function () {
   kodeBarang = $(this).val();
 
@@ -150,9 +160,19 @@ $("#pjKodeBarang").on("change", function () {
     dataType: "json",
     success: function (data) {
       if (data != "0") {
+        console.log(data);
+        $("#pjIdBarang").val(data.id);
         $("#pjNamaBarang").val(data.namaBarang);
         $("#pjStokBarang").val(data.stokBarang);
       } else {
+        alt(
+          "warning",
+          "Maaf !",
+          "Data tidak ditemukan atau kode barang habis pakai"
+        );
+        setTimeout(() => {
+          document.location.reload();
+        }, 4000);
         $("#pjNamaBarang").val("");
         $("#pjStokBarang").val("");
       }
@@ -162,6 +182,8 @@ $("#pjKodeBarang").on("change", function () {
     },
   });
 });
+
+// Jika jumlah barang dipinjam (barang modal) diisi, cek apakah stok cukup
 $("#jumlahBarang").on("change", function () {
   pjStokBarang = $("#pjStokBarang").val();
   jumlahBarang = $(this).val();
@@ -176,6 +198,7 @@ $("#jumlahBarang").on("change", function () {
   }
 });
 
+// Jika tombol ubah status pesanan diklik, jalankan kode berikut
 $(".tmbUbahStatusPesanan").on("click", function () {
   id = $(this).data("id");
   nama = $(this).data("nama");
@@ -207,6 +230,7 @@ $(".tmbUbahStatusPesanan").on("click", function () {
   });
 });
 
+// Jika tombol proses pesanan di klik, jalankan kode berikut
 $(".tbmProsesPesanan").on("click", function () {
   idp = $(this).data("idp");
 
@@ -220,6 +244,8 @@ $(".tbmProsesPesanan").on("click", function () {
 
       if (data.jenisBarang == "1") {
         $("#modalPinjamBarangModal").modal("show");
+        $("#pjIdBarang").val(data.idBarang);
+        $("#pjIdPinjaman").val(data.idP);
         $("#pjKodeBarang").val(data.kodeBarang);
         $("#pjNamaBarang").val(data.namaBarang);
         $("#pjStokBarang").val(data.stokBarang);
@@ -229,6 +255,51 @@ $(".tbmProsesPesanan").on("click", function () {
       }
       if (data.jenisBarang == "2") {
       }
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+});
+
+// Jika modal Kembalikan barang modal dibuka, kursor mengarah ke input kodebarang
+$("#modalKembaliBarangModal").on("shown.bs.modal", function () {
+  $("#kbKodeBarang").focus();
+});
+
+$("#kbKodeBarang").on("change", function () {
+  kodeBarang = $(this).val();
+
+  $.ajax({
+    url: "/admin/getPeminjam",
+    type: "post",
+    data: { kodeBarang },
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      $("#kbNamaPeminjam").html(data);
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+});
+
+$("#kbNamaPeminjam").on("change", function () {
+  namaPeminjam = $(this).val();
+  kodeBarang = $("#kbKodeBarang").val();
+
+  $.ajax({
+    url: "/admin/barangDipinjam",
+    type: "post",
+    data: { namaPeminjam, kodeBarang },
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      $("#kbNamaBarang").val(data.namaBarang);
+      $("#jumlahBarangKembali").val(data.jumlahBarang);
+      $("#kbIdBarang").val(data.idB);
+      $("#kbIdPinjaman").val(data.idP);
     },
     error: function (e) {
       console.log(e);

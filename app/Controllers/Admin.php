@@ -49,6 +49,7 @@ class Admin extends BaseController
         $dataPesanan = new ModelDaftarPesanan();
 
         $jenis = $dataPesanan
+            ->select('*, daftarPesanan.id as idP')
             ->join('pengguna', 'pengguna.id = daftarPesanan.idPemesan')
             ->join('dataBarang', 'dataBarang.id = daftarPesanan.idBarang')
             ->where('daftarPesanan.id', $idP)
@@ -66,7 +67,7 @@ class Admin extends BaseController
         $kodeBarang = $this->request->getVar('kodeBarang');
 
         $dataBarang = new ModelDaftarBarang();
-        $data = $dataBarang->where('kodeBarang', $kodeBarang)->first();
+        $data = $dataBarang->where('kodeBarang', $kodeBarang)->where('jenisBarang', '1')->first();
 
         if ($data) {
             echo (json_encode($data));
@@ -81,11 +82,13 @@ class Admin extends BaseController
             return redirect()->to('login');
         }
 
+        $idBarang = $this->request->getVar('pjIdBarang');
         $kodeBarang = $this->request->getVar('pjKodeBarang');
         $namaPeminjam = $this->request->getVar('namaPeminjam');
         $jumlahBarang = $this->request->getVar('jumlahBarang');
         $waktu = $this->request->getVar('waktu');
         $keperluan = $this->request->getVar('keperluan');
+        $idDataPinjaman = $this->request->getVar('pjIdPinjaman');
 
         $tanggalPinjam = (explode(' ', $waktu))[0];
         $waktuPinjam = (explode(' ', $waktu))[1];
@@ -93,6 +96,7 @@ class Admin extends BaseController
         $dataPinjamBarang = new ModelDataPinjamBarang();
 
         $data = [
+            'idBarang' => $idBarang,
             'kodeBarang' => $kodeBarang,
             'namaPeminjam' => $namaPeminjam,
             'jumlahBarang' => $jumlahBarang,
@@ -103,7 +107,7 @@ class Admin extends BaseController
         $simpan = $dataPinjamBarang->save($data);
         if ($simpan) {
             $dataBarang = new ModelDaftarBarang();
-            $upd = $dataBarang->where('kodeBarang', $kodeBarang)->first();
+            $upd = $dataBarang->where('id', $idBarang)->first();
             $data2 = [
                 'id' => $upd->id,
                 'stokBarang' => $upd->stokBarang - $jumlahBarang,
@@ -112,9 +116,58 @@ class Admin extends BaseController
             session()->setFlashdata('tipe', 'success');
             session()->setFlashdata('pesan', 'Data berhasil disimpan');
             $dataBarang->save($data2);
+
+            if ($idDataPinjaman != '') {
+                $dataPesanan = new ModelDaftarPesanan();
+                $data3 = ['id' => $idDataPinjaman, 'status' => '1'];
+                $dataPesanan->save($data3);
+            }
         }
 
         return redirect()->to('admin');
+    }
+
+    public function getPeminjam()
+    {
+        $kodeBarang = $this->request->getVar('kodeBarang');
+        $dataPinjamBarang = new ModelDataPinjamBarang();
+
+        $data = $dataPinjamBarang
+            ->where(['kodeBarang' => $kodeBarang, 'status' => '0'])
+            ->findAll();
+        $res = '<option value="">-- Peminjam --</option>';
+        foreach ($data as $key) {
+            $res .= '<option value="' . $key->namaPeminjam . '">' . $key->namaPeminjam . '</option>';
+        }
+
+        echo json_encode($res);
+    }
+
+    public function barangDipinjam()
+    {
+        $kodeBarang = $this->request->getVar('kodeBarang');
+        $namaPeminjam = $this->request->getVar('namaPeminjam');
+
+        $dataPinjamBarang = new ModelDataPinjamBarang();
+        $data = $dataPinjamBarang
+            ->select('*, dataPinjamBarang.id as idP, dataBarang.id as idB')
+            ->where(['dataPinjamBarang.kodeBarang' => $kodeBarang, 'namaPeminjam' => $namaPeminjam])
+            ->join('dataBarang', 'dataBarang.kodeBarang = dataPinjamBarang.kodeBarang')
+            ->first();
+
+        echo json_encode($data);
+    }
+
+    public function prosesKembaliBarangModal()
+    {
+        $kbIdBarang = $this->request->getVar('kbIdBarang');
+        $kbIdPinjaman = $this->request->getVar('kbIdPinjaman');
+        $kbKodeBarang = $this->request->getVar('kbKodeBarang');
+        $kbNamaPeminjam = $this->request->getVar('kbNamaPeminjam');
+        $kbNamaBarang = $this->request->getVar('kbNamaBarang');
+        $namaKembali = $this->request->getVar('namaKembali');
+        $jumlahBarangKembali = $this->request->getVar('jumlahBarangKembali');
+        $waktu = $this->request->getVar('waktu');
     }
 
     public function logout()
@@ -306,5 +359,16 @@ class Admin extends BaseController
         $dataBarang = new ModelDaftarBarang();
         $data['barang'] = $dataBarang->where('id', $id)->first();
         return view('admin/pages/printBarcode', $data);
+    }
+
+    public function daftarBarangDipinjam()
+    {
+        $dataPinjam = new ModelDataPinjamBarang();
+        $data['pinjam'] = $dataPinjam
+            ->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')
+            ->orderBy('status', 'ASC')
+            ->orderBy('dataPinjamBarang.id', 'DESC')
+            ->findAll();
+        return \view('admin/pages/daftarBarangDipinjam', $data);
     }
 }
