@@ -185,18 +185,34 @@ $("#pjKodeBarang").on("change", function () {
 
 // Jika jumlah barang dipinjam (barang modal) diisi, cek apakah stok cukup
 $("#jumlahBarang").on("change", function () {
-  pjStokBarang = $("#pjStokBarang").val();
-  jumlahBarang = $(this).val();
+  const pjStokBarang = $("#pjStokBarang").val();
+  const jumlahBarang = $(this).val();
   if (jumlahBarang < 1) {
     $("#tombolSimpanPinjamBarang").attr("disabled", "disabled");
-    alert("Minimal jumlah pinjam adalah 1");
-  } else if (jumlahBarang > pjStokBarang) {
+    alt("error", "Error", "Minimal jumlah pinjam adalah 1");
+  } else if (Number(jumlahBarang) > Number(pjStokBarang)) {
     $("#tombolSimpanPinjamBarang").attr("disabled", "disabled");
-    alert("Stok barang tidak cukup");
+    alt("error", "Error", "Maaf, Stok barang tidak cukup");
   } else {
     $("#tombolSimpanPinjamBarang").removeAttr("disabled");
   }
 });
+
+function cekJumlahbarang() {
+  const pjStokBarang = $("#pjStokBarang").val();
+  const jumlahBarang = $("#jumlahBarang").val();
+  if (Number(jumlahBarang) < 1) {
+    $("#tombolSimpanPinjamBarang").attr("disabled", "disabled");
+    alt("error", "Error", "Minimal jumlah pinjam adalah 1");
+    return false;
+  } else if (Number(jumlahBarang) > Number(pjStokBarang)) {
+    $("#tombolSimpanPinjamBarang").attr("disabled", "disabled");
+    alt("error", "Error", "Stok barang tidak cukup");
+    return false;
+  } else {
+    $("#tombolSimpanPinjamBarang").removeAttr("disabled");
+  }
+}
 
 // Jika tombol ubah status pesanan diklik, jalankan kode berikut
 $(".tmbUbahStatusPesanan").on("click", function () {
@@ -267,6 +283,7 @@ $("#modalKembaliBarangModal").on("shown.bs.modal", function () {
   $("#kbKodeBarang").focus();
 });
 
+// Proses kembali barang modal. jika kode barang sudah diisi
 $("#kbKodeBarang").on("change", function () {
   kodeBarang = $(this).val();
 
@@ -285,6 +302,7 @@ $("#kbKodeBarang").on("change", function () {
   });
 });
 
+// Proses kembali barang modal. jika nama peminjam sudah dipilih
 $("#kbNamaPeminjam").on("change", function () {
   namaPeminjam = $(this).val();
   kodeBarang = $("#kbKodeBarang").val();
@@ -297,7 +315,9 @@ $("#kbNamaPeminjam").on("change", function () {
     success: function (data) {
       console.log(data);
       $("#kbNamaBarang").val(data.namaBarang);
-      $("#jumlahBarangKembali").val(data.jumlahBarang);
+      $("#jumlahBarangKembali").val(
+        Number(data.jumlahBarang) - Number(data.jumlahKembali)
+      );
       $("#kbIdBarang").val(data.idB);
       $("#kbIdPinjaman").val(data.idP);
     },

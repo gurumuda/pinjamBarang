@@ -54,7 +54,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <?= form_open('/admin/prosesPinjamBarangModal'); ?>
+                <?= form_open('/admin/prosesPinjamBarangModal', ["onSubmit" => 'return cekJumlahbarang()']); ?>
                 <input type="hidden" name="pjIdBarang" id="pjIdBarang" style="display: none;">
                 <input type="hidden" name="pjIdPinjaman" id="pjIdPinjaman" style="display: none;">
                 <div class="modal-body">
@@ -143,19 +143,19 @@
                             <input type="text" readonly name="kbNamaBarang" id="kbNamaBarang" class="form-control" placeholder="Auto Load">
                         </div>
                     </div>
-
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Jumlah Barang Kembali</label>
+                            <input type="number" name="jumlahBarangKembali" id="jumlahBarangKembali" class="form-control" placeholder="Masukkan jumlah barang yang kembali">
+                        </div>
+                    </div>
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Nama Mengembalikan</label>
                             <input type="text" name="namaKembali" id="namaKembali" class="form-control" placeholder="Masukkan nama yang mengembalikan">
                         </div>
                     </div>
-                    <div class="row mb-2">
-                        <div class="input-group input-group-outline">
-                            <label for="" class="col-4">Jumlah Barang</label>
-                            <input type="number" name="jumlahBarangKembali" id="jumlahBarangKembali" class="form-control" placeholder="Masukkan jumlah barang yang kembali">
-                        </div>
-                    </div>
+
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Kembali</label>
@@ -165,7 +165,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" id="tombolSimpanPinjamBarang" class="btn bg-gradient-primary">Simpan</button>
+                    <button type="submit" id="tombolSimpanKembaliBarang" class="btn bg-gradient-primary">Simpan</button>
                 </div>
                 <?= form_close(); ?>
             </div>

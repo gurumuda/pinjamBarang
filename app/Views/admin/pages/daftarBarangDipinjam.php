@@ -19,7 +19,8 @@
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Kode Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Peminjam</th>
-                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Jumlah</th>
+                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Jml Pinjam</th>
+                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Jml Kembali</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Tanggal Pinjam</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Waktu Pinjam</th>
                                     <th class="text-uppercase text-secondary text-sm opacity-7 ps-2">Keperluan</th>
@@ -33,6 +34,7 @@
                                         <td class="text-xs"><?= $brg->namaBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaPeminjam; ?></td>
                                         <td class="text-xs"><?= $brg->jumlahBarang; ?></td>
+                                        <td class="text-xs"><?= $brg->jumlahKembali; ?></td>
                                         <td class="text-xs"><?= $brg->tanggalPinjam; ?></td>
                                         <td class="text-xs"><?= $brg->waktuPinjam; ?></td>
                                         <td class="text-xs"><?= $brg->keperluan; ?></td>

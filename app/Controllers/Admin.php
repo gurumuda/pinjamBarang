@@ -100,6 +100,7 @@ class Admin extends BaseController
             'kodeBarang' => $kodeBarang,
             'namaPeminjam' => $namaPeminjam,
             'jumlahBarang' => $jumlahBarang,
+            'jumlahKembali' => 0,
             'tanggalPinjam' => $tanggalPinjam,
             'waktuPinjam' => $waktuPinjam,
             'keperluan' => $keperluan,
@@ -151,7 +152,7 @@ class Admin extends BaseController
         $dataPinjamBarang = new ModelDataPinjamBarang();
         $data = $dataPinjamBarang
             ->select('*, dataPinjamBarang.id as idP, dataBarang.id as idB')
-            ->where(['dataPinjamBarang.kodeBarang' => $kodeBarang, 'namaPeminjam' => $namaPeminjam])
+            ->where(['dataPinjamBarang.kodeBarang' => $kodeBarang, 'namaPeminjam' => $namaPeminjam, 'status' => '0'])
             ->join('dataBarang', 'dataBarang.kodeBarang = dataPinjamBarang.kodeBarang')
             ->first();
 
@@ -168,6 +169,47 @@ class Admin extends BaseController
         $namaKembali = $this->request->getVar('namaKembali');
         $jumlahBarangKembali = $this->request->getVar('jumlahBarangKembali');
         $waktu = $this->request->getVar('waktu');
+
+        $tanggalKembali = (explode(' ', $waktu))[0];
+        $waktuKembali = (explode(' ', $waktu))[1];
+
+        $dataBarang = new ModelDaftarBarang();
+        $dataBarangDipinjam = $dataBarang->where('id', $kbIdBarang)->first();
+        $dataPinjam = new ModelDataPinjamBarang();
+
+        $dataPinjaman = $dataPinjam->where('id', $kbIdPinjaman)->first();
+
+        if ($dataPinjaman->jumlahBarang == $jumlahBarangKembali or (($dataPinjaman->jumlahKembali + $jumlahBarangKembali) == $dataPinjaman->jumlahBarang)) {
+            $status = '1';
+        } elseif ($dataPinjaman->jumlahBarang > $jumlahBarangKembali) {
+            $status = '0';
+        } else {
+            session()->setFlashdata('tipe', 'error');
+            session()->setFlashdata('pesan', 'Data tidak disimpan, jumlah barang dikembalikan lebih banyak dari yang dipinjam');
+            return redirect()->back();
+        }
+
+        $data = [
+            'id' => $kbIdPinjaman,
+            'namaKembali' => $namaKembali,
+            'tanggalKembali' => $tanggalKembali,
+            'waktuKembali' => $waktuKembali,
+            'jumlahKembali' => $dataPinjaman->jumlahKembali + $jumlahBarangKembali,
+            'status' => $status,
+        ];
+
+        $simpan = $dataPinjam->save($data);
+
+        if ($simpan) {
+            $data2 = [
+                'id' => $kbIdBarang,
+                'stokBarang' => $dataBarangDipinjam->stokBarang + $jumlahBarangKembali
+            ];
+            $dataBarang->save($data2);
+        }
+        session()->setFlashdata('tipe', 'success');
+        session()->setFlashdata('pesan', 'Data berhasil disimpan');
+        return redirect()->back();
     }
 
     public function logout()
