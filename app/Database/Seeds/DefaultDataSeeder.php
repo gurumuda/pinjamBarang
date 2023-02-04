@@ -9,13 +9,20 @@ class DefaultDataSeeder extends Seeder
     public function run()
     {
         $data = [
-            'email' => 'admin@admin.com',
-            'pass' => '$2y$10$QVvjgFGdNELuJIggL3IO0.BLqhWXvAw8keQP49yhzYWgYO/BPOj5O',
-            'nama' => 'Administrator',
-            'level' => '2'
-
+            [
+                'email' => 'admin@admin.com',
+                'pass' => '$2y$10$QVvjgFGdNELuJIggL3IO0.BLqhWXvAw8keQP49yhzYWgYO/BPOj5O',
+                'nama' => 'Administrator',
+                'level' => '2'
+            ],
+            [
+                'email' => 'guru1@admin.com',
+                'pass' => '$2y$10$QVvjgFGdNELuJIggL3IO0.BLqhWXvAw8keQP49yhzYWgYO/BPOj5O',
+                'nama' => 'Alvian',
+                'level' => '1'
+            ]
         ];
 
-        $this->db->table('pengguna')->insert($data);
+        $this->db->table('pengguna')->insertBatch($data);
     }
 }

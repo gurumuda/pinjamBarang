@@ -28,7 +28,11 @@ class DataPinjamBarang extends Migration
             ],
             'jumlahBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '10',
+                'constraint' => '6',
+            ],
+            'jumlahKembali' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '6',
             ],
             'tanggalPinjam' => [
                 'type'       => 'DATE'

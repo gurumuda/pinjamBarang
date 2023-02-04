@@ -38,6 +38,10 @@ class DataBarang extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '6',
             ],
+            'jmlDimiliki' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '6',
+            ],
             'satuan' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '40',
