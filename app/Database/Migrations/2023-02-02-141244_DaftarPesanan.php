@@ -24,7 +24,7 @@ class DaftarPesanan extends Migration
             ],
             'jumlahBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '10',
+                'constraint' => '6',
             ],
             'tanggalPakai' => [
                 'type'       => 'DATE'

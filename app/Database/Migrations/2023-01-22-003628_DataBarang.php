@@ -20,7 +20,7 @@ class DataBarang extends Migration
             ],
             'fileBarcode' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '40',
+                'constraint' => '70',
             ],
             'namaBarang' => [
                 'type'       => 'VARCHAR',
@@ -28,7 +28,7 @@ class DataBarang extends Migration
             ],
             'jenisBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '15',
+                'constraint' => '2',
             ],
             'gambarBarang' => [
                 'type'       => 'VARCHAR',
@@ -36,7 +36,7 @@ class DataBarang extends Migration
             ],
             'stokBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '4',
+                'constraint' => '6',
             ],
             'satuan' => [
                 'type'       => 'VARCHAR',

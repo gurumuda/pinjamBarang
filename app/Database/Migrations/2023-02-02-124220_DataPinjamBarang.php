@@ -20,7 +20,7 @@ class DataPinjamBarang extends Migration
             ],
             'kodeBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '50',
+                'constraint' => '30',
             ],
             'namaPeminjam' => [
                 'type'       => 'VARCHAR',
@@ -35,6 +35,10 @@ class DataPinjamBarang extends Migration
             ],
             'waktuPinjam' => [
                 'type'       => 'TIME',
+            ],
+            'namaKembali' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '50',
             ],
             'tanggalKembali' => [
                 'type'       => 'DATE',

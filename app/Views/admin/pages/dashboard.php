@@ -248,7 +248,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-6 mt-2">
+        <!-- <div class="col-lg-4 col-md-6 mt-2">
             <div class="card h-100">
                 <div class="card-header pb-0">
                     <h6>Orders overview</h6>
@@ -316,7 +316,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
 </div>
