@@ -15,11 +15,11 @@ class DaftarPesanan extends Migration
                 'auto_increment' => true,
             ],
             'idBarang' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '50',
+                'type'       => 'INT',
+                'constraint' => '11',
             ],
             'idPemesan' => [
-                'type'       => 'VARCHAR',
+                'type'       => 'INT',
                 'constraint' => '11',
             ],
             'jumlahBarang' => [

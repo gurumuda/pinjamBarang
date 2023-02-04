@@ -14,9 +14,13 @@ class DataPinjamBarang extends Migration
                 'constraint'     => 11,
                 'auto_increment' => true,
             ],
+            'idBarang' => [
+                'type'       => 'INT',
+                'constraint' => '11',
+            ],
             'kodeBarang' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '30',
+                'constraint' => '50',
             ],
             'namaPeminjam' => [
                 'type'       => 'VARCHAR',
