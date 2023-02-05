@@ -36,7 +36,7 @@
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <button class="btn bg-danger text-white"><i class="material-icons opacity-10 text-white">input</i> Ambil Barang Habis Pakai</button>
+                    <button class="btn bg-danger text-white" data-bs-toggle="modal" data-bs-target="#modalAmbilBarang"><i class="material-icons opacity-10 text-white">input</i> Ambil Barang Habis Pakai</button>
 
                 </div>
             </div>
@@ -166,6 +166,71 @@
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
                     <button type="submit" id="tombolSimpanKembaliBarang" class="btn bg-gradient-primary">Simpan</button>
+                </div>
+                <?= form_close(); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAmbilBarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: rgb(255, 0, 0);">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Ambil Barang Habis Pakai</h5>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?= form_open('/admin/prosesAmbilBarang', ["onSubmit" => 'return cekJmlAmbBarang()']); ?>
+                <input type="hidden" name="amIdBarang" id="amIdBarang" style="display: none;">
+                <input type="hidden" name="amIdAmbil" id="amIdAmbil" style="display: none;">
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Kode Barang</label>
+                            <input type="text" name="amKodeBarang" id="amKodeBarang" class="form-control" placeholder="Masukkan Kode Barang">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nama Barang</label>
+                            <input type="text" readonly name="amNamaBarang" id="amNamaBarang" class="form-control" placeholder="Auto Load">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Stok Barang</label>
+                            <input type="text" readonly name="amStokBarang" id="amStokBarang" class="form-control" placeholder="Auto Load">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nama Pengambil</label>
+                            <input type="text" name="namaPengambil" id="namaPengambil" class="form-control" placeholder="Masukkan nama yang mengambil barang">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Jumlah Barang</label>
+                            <input type="number" name="amJumlahBarang" id="amJumlahBarang" class="form-control" placeholder="Masukkan jumlah barang yang diambil">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Waktu Ambil</label>
+                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu ambil" required>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Keperluan</label>
+                            <textarea name="amKeperluan" id="amKeperluan" class="form-control" rows="3" placeholder="Masukkan keperluan (Contoh: Pembelajaran, Ekstrakurikuler, Rapat, Dll)"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" id="tombolSimpanAmbilBarang" class="btn bg-gradient-success">Simpan</button>
                 </div>
                 <?= form_close(); ?>
             </div>

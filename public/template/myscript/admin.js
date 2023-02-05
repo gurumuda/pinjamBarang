@@ -97,9 +97,16 @@ $("#modalTambahBarang, #modalPinjamBarangModal").on(
   }
 );
 
-// Jika modal tambah barang dibuka, kursor mengarah ke input kodebarang
 $("#modalTambahBarang").on("shown.bs.modal", function () {
   $("#kodeBarang").focus();
+});
+
+$("#modalAmbilBarang").on("shown.bs.modal", function () {
+  $("#amKodeBarang").focus();
+});
+
+$("#modalPinjamBarangModal").on("shown.bs.modal", function () {
+  $("#pjKodeBarang").focus();
 });
 
 // Jika tombol ubah barang di klik, maka jalankan kode berikut
@@ -214,6 +221,22 @@ function cekJumlahbarang() {
   }
 }
 
+function cekJmlAmbBarang() {
+  const amStokBarang = $("#amStokBarang").val();
+  const amJumlahBarang = $("#amJumlahBarang").val();
+  if (Number(amJumlahBarang) < 1) {
+    $("#tombolSimpanAmbilBarang").attr("disabled", "disabled");
+    alt("error", "Error", "Minimal jumlah pinjam adalah 1");
+    return false;
+  } else if (Number(amJumlahBarang) > Number(amStokBarang)) {
+    $("#tombolSimpanAmbilBarang").attr("disabled", "disabled");
+    alt("error", "Error", "Stok barang tidak cukup");
+    return false;
+  } else {
+    $("#tombolSimpanAmbilBarang").removeAttr("disabled");
+  }
+}
+
 // Jika tombol ubah status pesanan diklik, jalankan kode berikut
 $(".tmbUbahStatusPesanan").on("click", function () {
   id = $(this).data("id");
@@ -270,6 +293,15 @@ $(".tbmProsesPesanan").on("click", function () {
         $("#keperluan").val(data.keperluan);
       }
       if (data.jenisBarang == "2") {
+        $("#modalAmbilBarang").modal("show");
+        $("#amIdBarang").val(data.idBarang);
+        $("#amIdAmbil").val(data.idP);
+        $("#amKodeBarang").val(data.kodeBarang);
+        $("#amNamaBarang").val(data.namaBarang);
+        $("#amStokBarang").val(data.stokBarang);
+        $("#namaPengambil").val(data.nama);
+        $("#amJumlahBarang").val(data.jumlahBarang);
+        $("#amKeperluan").val(data.keperluan);
       }
     },
     error: function (e) {
@@ -325,4 +357,49 @@ $("#kbNamaPeminjam").on("change", function () {
       console.log(e);
     },
   });
+});
+
+// Jika kode barang pada modal ambil barang habis pakai di isi
+$("#amKodeBarang").on("change", function () {
+  kodeBarang = $(this).val();
+
+  $.ajax({
+    url: "/admin/getDataAmBr",
+    type: "post",
+    data: { kodeBarang },
+    dataType: "json",
+    success: function (data) {
+      if (data != "0") {
+        console.log(data);
+        $("#amIdBarang").val(data.id);
+        $("#amNamaBarang").val(data.namaBarang);
+        $("#amStokBarang").val(data.stokBarang);
+      } else {
+        alt("warning", "Maaf !", "Data tidak ditemukan atau kode barang modal");
+        setTimeout(() => {
+          document.location.reload();
+        }, 4000);
+        $("#amNamaBarang").val("");
+        $("#amStokBarang").val("");
+      }
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+});
+
+// Jika jumlah barang diambil (barang habis pakai) diisi, cek apakah stok cukup
+$("#amJumlahBarang").on("change", function () {
+  const amStokBarang = $("#amStokBarang").val();
+  const jumlahBarang = $(this).val();
+  if (jumlahBarang < 1) {
+    $("#tombolSimpanAmbilBarang").attr("disabled", "disabled");
+    alt("error", "Error", "Minimal jumlah ambil adalah 1");
+  } else if (Number(jumlahBarang) > Number(amStokBarang)) {
+    $("#tombolSimpanAmbilBarang").attr("disabled", "disabled");
+    alt("error", "Error", "Maaf, Stok barang tidak cukup");
+  } else {
+    $("#tombolSimpanAmbilBarang").removeAttr("disabled");
+  }
 });

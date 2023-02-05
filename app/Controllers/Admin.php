@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\ModelDaftarBarang;
 use App\Models\ModelDataPinjamBarang;
 use App\Models\ModelDaftarPesanan;
+use App\Models\ModelAmbilBarang;
 use Picqer;
 
 
@@ -76,6 +77,24 @@ class Admin extends BaseController
         }
     }
 
+    public function getDataAmBr()
+    {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
+        $kodeBarang = $this->request->getVar('kodeBarang');
+
+        $dataBarang = new ModelDaftarBarang();
+        $data = $dataBarang->where('kodeBarang', $kodeBarang)->where('jenisBarang', '2')->first();
+
+        if ($data) {
+            echo (json_encode($data));
+        } else {
+            echo (json_encode('0'));
+        }
+    }
+
     public function prosesPinjamBarangModal()
     {
         if (!(session()->get('email') && \session()->get('level') == 'adm')) {
@@ -106,6 +125,58 @@ class Admin extends BaseController
             'keperluan' => $keperluan,
         ];
         $simpan = $dataPinjamBarang->save($data);
+        if ($simpan) {
+            $dataBarang = new ModelDaftarBarang();
+            $upd = $dataBarang->where('id', $idBarang)->first();
+            $data2 = [
+                'id' => $upd->id,
+                'stokBarang' => $upd->stokBarang - $jumlahBarang,
+            ];
+
+            session()->setFlashdata('tipe', 'success');
+            session()->setFlashdata('pesan', 'Data berhasil disimpan');
+            $dataBarang->save($data2);
+
+            if ($idDataPinjaman != '') {
+                $dataPesanan = new ModelDaftarPesanan();
+                $data3 = ['id' => $idDataPinjaman, 'status' => '1'];
+                $dataPesanan->save($data3);
+            }
+        }
+
+        return redirect()->to('admin');
+    }
+
+    public function prosesAmbilBarang()
+    {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
+        $idBarang = $this->request->getVar('amIdBarang');
+        $kodeBarang = $this->request->getVar('amKodeBarang');
+        $namaPengambil = $this->request->getVar('namaPengambil');
+        $jumlahBarang = $this->request->getVar('amJumlahBarang');
+        $waktu = $this->request->getVar('waktu');
+        $keperluan = $this->request->getVar('amKeperluan');
+        $idDataPinjaman = $this->request->getVar('amIdAmbil');
+
+        $tanggalAmbil = (explode(' ', $waktu))[0];
+        $waktuAmbil = (explode(' ', $waktu))[1];
+
+        $dataAmbilBarang = new ModelAmbilBarang();
+
+        $data = [
+            'idBarang' => $idBarang,
+            'kodeBarang' => $kodeBarang,
+            'namaPengambil' => $namaPengambil,
+            'jumlahBarang' => $jumlahBarang,
+            'tanggalAmbil' => $tanggalAmbil,
+            'waktuAmbil' => $waktuAmbil,
+            'keperluan' => $keperluan,
+        ];
+        $simpan = $dataAmbilBarang->save($data);
+
         if ($simpan) {
             $dataBarang = new ModelDaftarBarang();
             $upd = $dataBarang->where('id', $idBarang)->first();
@@ -412,5 +483,15 @@ class Admin extends BaseController
             ->orderBy('dataPinjamBarang.id', 'DESC')
             ->findAll();
         return \view('admin/pages/daftarBarangDipinjam', $data);
+    }
+
+    public function daftarBarangDiambil()
+    {
+        $dataAmbil = new ModelAmbilBarang();
+        $data['ambil'] = $dataAmbil
+            ->join('dataBarang', 'dataBarang.id = dataAmbilBarang.idBarang')
+            ->orderBy('dataAmbilBarang.id', 'DESC')
+            ->findAll();
+        return \view('admin/pages/daftarBarangDiambil', $data);
     }
 }
