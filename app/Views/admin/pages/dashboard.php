@@ -54,7 +54,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <?= form_open('/admin/prosesPinjamBarangModal', ["onSubmit" => 'return cekJumlahbarang()']); ?>
+                <?= form_open('/admin/prosesPinjamBarangModal', ["onSubmit" => 'return cekProsesPinjamBarang()']); ?>
                 <input type="hidden" name="pjIdBarang" id="pjIdBarang" style="display: none;">
                 <input type="hidden" name="pjIdPinjaman" id="pjIdPinjaman" style="display: none;">
                 <div class="modal-body">
@@ -91,7 +91,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Pinjam</label>
-                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu pinjam" required>
+                            <input type="text" name="waktu" id="filter-date-2" class="form-control" placeholder="Tanggal dan waktu pinjam">
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -119,7 +119,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <?= form_open('/admin/prosesKembaliBarangModal'); ?>
+                <?= form_open('/admin/prosesKembaliBarangModal', ["onSubmit" => 'return cekProsesKembaliBarang()']); ?>
                 <input type="hidden" name="kbIdBarang" id="kbIdBarang" style="display: none;">
                 <input type="hidden" name="kbIdPinjaman" id="kbIdPinjaman" style="display: none;">
                 <div class="modal-body">
@@ -145,6 +145,12 @@
                     </div>
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Jumlah Dipinjam</label>
+                            <input type="text" readonly name="kbJumlahDipinjam" id="kbJumlahDipinjam" class="form-control" placeholder="Auto Load">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
                             <label for="" class="col-4">Jumlah Barang Kembali</label>
                             <input type="number" name="jumlahBarangKembali" id="jumlahBarangKembali" class="form-control" placeholder="Masukkan jumlah barang yang kembali">
                         </div>
@@ -159,7 +165,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Kembali</label>
-                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu kembali" required>
+                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu kembali">
                         </div>
                     </div>
                 </div>
@@ -181,7 +187,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <?= form_open('/admin/prosesAmbilBarang', ["onSubmit" => 'return cekJmlAmbBarang()']); ?>
+                <?= form_open('/admin/prosesAmbilBarang', ["onSubmit" => 'return cekProsesAmbilBarang()']); ?>
                 <input type="hidden" name="amIdBarang" id="amIdBarang" style="display: none;">
                 <input type="hidden" name="amIdAmbil" id="amIdAmbil" style="display: none;">
                 <div class="modal-body">
@@ -218,7 +224,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Ambil</label>
-                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu ambil" required>
+                            <input type="text" name="waktu" id="filter-date-3" class="form-control" placeholder="Tanggal dan waktu ambil">
                         </div>
                     </div>
                     <div class="row mb-2">

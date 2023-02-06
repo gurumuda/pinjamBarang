@@ -205,35 +205,149 @@ $("#jumlahBarang").on("change", function () {
   }
 });
 
-function cekJumlahbarang() {
-  const pjStokBarang = $("#pjStokBarang").val();
-  const jumlahBarang = $("#jumlahBarang").val();
-  if (Number(jumlahBarang) < 1) {
-    $("#tombolSimpanPinjamBarang").attr("disabled", "disabled");
-    alt("error", "Error", "Minimal jumlah pinjam adalah 1");
+function cekProsesPinjamBarang() {
+  pjKodeBarang = $("#pjKodeBarang").val();
+  pjNamaBarang = $("#pjNamaBarang").val();
+  pjStokBarang = $("#pjStokBarang").val();
+  namaPeminjam = $("#namaPeminjam").val();
+  jumlahBarang = $("#jumlahBarang").val();
+  waktu = $("#filter-date-2").val();
+  keperluan = $("#keperluan").val();
+
+  if (pjKodeBarang === "") {
+    $("#pjKodeBarang").focus();
     return false;
-  } else if (Number(jumlahBarang) > Number(pjStokBarang)) {
-    $("#tombolSimpanPinjamBarang").attr("disabled", "disabled");
+  }
+  if (pjNamaBarang === "") {
+    return false;
+  }
+  if (pjStokBarang === "") {
+    return false;
+  }
+  if (namaPeminjam === "") {
+    $("#namaPeminjam").focus();
+    return false;
+  }
+  if (jumlahBarang === "") {
+    $("#jumlahBarang").focus();
+    return false;
+  }
+  if (waktu === "") {
+    $("#filter-date-2").focus();
+    return false;
+  }
+  if (keperluan === "") {
+    $("#keperluan").focus();
+    return false;
+  }
+  if (Number(jumlahBarang) > Number(pjStokBarang)) {
     alt("error", "Error", "Stok barang tidak cukup");
+    $("#jumlahBarang").focus();
     return false;
-  } else {
-    $("#tombolSimpanPinjamBarang").removeAttr("disabled");
+  }
+  if (Number(jumlahBarang) < 1) {
+    alt("error", "Error", "Jumlah Pengambilan Minimal 1");
+    $("#jumlahBarang").focus();
+    return false;
+  }
+  if (Number(pjStokBarang) == "0") {
+    alt("error", "Maaf !", "Stok Barang 0");
+    return false;
   }
 }
 
-function cekJmlAmbBarang() {
-  const amStokBarang = $("#amStokBarang").val();
-  const amJumlahBarang = $("#amJumlahBarang").val();
-  if (Number(amJumlahBarang) < 1) {
-    $("#tombolSimpanAmbilBarang").attr("disabled", "disabled");
-    alt("error", "Error", "Minimal jumlah pinjam adalah 1");
+function cekProsesAmbilBarang() {
+  amKodeBarang = $("#amKodeBarang").val();
+  amNamaBarang = $("#amNamaBarang").val();
+  amStokBarang = $("#amStokBarang").val();
+  namaPengambil = $("#namaPengambil").val();
+  amJumlahBarang = $("#amJumlahBarang").val();
+  waktu = $("#filter-date-3").val();
+  amKeperluan = $("#amKeperluan").val();
+
+  if (amKodeBarang === "") {
+    $("#amKodeBarang").focus();
     return false;
-  } else if (Number(amJumlahBarang) > Number(amStokBarang)) {
-    $("#tombolSimpanAmbilBarang").attr("disabled", "disabled");
+  }
+  if (amNamaBarang === "") {
+    return false;
+  }
+  if (amStokBarang === "") {
+    return false;
+  }
+  if (namaPengambil === "") {
+    $("#namaPengambil").focus();
+    return false;
+  }
+  if (amJumlahBarang === "") {
+    $("#amJumlahBarang").focus();
+    return false;
+  }
+  if (waktu === "") {
+    $("#filter-date-3").focus();
+    return false;
+  }
+  if (amKeperluan === "") {
+    $("#amKeperluan").focus();
+    return false;
+  }
+  if (Number(amJumlahBarang) > Number(amStokBarang)) {
     alt("error", "Error", "Stok barang tidak cukup");
+    $("#amJumlahBarang").focus();
     return false;
-  } else {
-    $("#tombolSimpanAmbilBarang").removeAttr("disabled");
+  }
+  if (Number(amJumlahBarang) < 1) {
+    alt("error", "Error", "Jumlah Pengambilan Minimal 1");
+    $("#amJumlahBarang").focus();
+    return false;
+  }
+  if (Number(amStokBarang) == "0") {
+    alt("error", "Maaf !", "Stok Barang 0");
+    return false;
+  }
+}
+
+function cekProsesKembaliBarang() {
+  kbKodeBarang = $("#kbKodeBarang").val();
+  kbNamaPeminjam = $("#kbNamaPeminjam").val();
+  kbNamaBarang = $("#kbNamaBarang").val();
+  jumlahBarangKembali = $("#jumlahBarangKembali").val();
+  kbJumlahDipinjam = $("#kbJumlahDipinjam").val();
+  namaKembali = $("#namaKembali").val();
+  waktu = $("#filter-date").val();
+
+  if (kbKodeBarang === "") {
+    $("#kbKodeBarang").focus();
+    return false;
+  }
+  if (kbNamaPeminjam === "") {
+    $("#kbNamaPeminjam").focus();
+    return false;
+  }
+  if (kbNamaBarang === "") {
+    return false;
+  }
+  if (jumlahBarangKembali === "") {
+    $("#jumlahBarangKembali").focus();
+    return false;
+  }
+  if (namaKembali === "") {
+    $("#namaKembali").focus();
+    return false;
+  }
+  if (waktu === "") {
+    $("#filter-date").focus();
+    return false;
+  }
+  if (Number(jumlahBarangKembali) < 1) {
+    alt("error", "Error", "Jumlah Pengembalian Minimal 1");
+    $("#jumlahBarangKembali").focus();
+    return false;
+  }
+  if (Number(jumlahBarangKembali) > Number(kbJumlahDipinjam)) {
+    alt("error", "Error", "Jumlah Pengembalian Minimal 1");
+    $("#jumlahBarangKembali").focus();
+    return false;
   }
 }
 
@@ -347,6 +461,7 @@ $("#kbNamaPeminjam").on("change", function () {
     success: function (data) {
       console.log(data);
       $("#kbNamaBarang").val(data.namaBarang);
+      $("#kbJumlahDipinjam").val(data.jumlahBarang);
       $("#jumlahBarangKembali").val(
         Number(data.jumlahBarang) - Number(data.jumlahKembali)
       );
@@ -387,19 +502,4 @@ $("#amKodeBarang").on("change", function () {
       console.log(e);
     },
   });
-});
-
-// Jika jumlah barang diambil (barang habis pakai) diisi, cek apakah stok cukup
-$("#amJumlahBarang").on("change", function () {
-  const amStokBarang = $("#amStokBarang").val();
-  const jumlahBarang = $(this).val();
-  if (jumlahBarang < 1) {
-    $("#tombolSimpanAmbilBarang").attr("disabled", "disabled");
-    alt("error", "Error", "Minimal jumlah ambil adalah 1");
-  } else if (Number(jumlahBarang) > Number(amStokBarang)) {
-    $("#tombolSimpanAmbilBarang").attr("disabled", "disabled");
-    alt("error", "Error", "Maaf, Stok barang tidak cukup");
-  } else {
-    $("#tombolSimpanAmbilBarang").removeAttr("disabled");
-  }
 });

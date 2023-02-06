@@ -627,7 +627,7 @@ $uri = service('uri');; ?>
         jQuery(document).ready(function() {
             'use strict';
 
-            jQuery('#filter-date, #search-from-date, #search-to-date').datetimepicker();
+            jQuery('#filter-date, #filter-date-2, #filter-date-3, #search-from-date, #search-to-date').datetimepicker();
         });
     </script>
 </body>
