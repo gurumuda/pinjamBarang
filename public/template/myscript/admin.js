@@ -29,7 +29,9 @@ $("#tombolTambahBarang").on("click", function () {
           $("#kodeBarang").val("");
           $("#kodeBarang").focus();
         } else if (data == "2") {
-          alt("error", "Kode Barang Sudah Ada..", "stok barang diperbaharui");
+          ntf("Data berhasil ditambah, stok barang ditambah ke stok lama");
+          $("#kodeBarang").val("");
+          $("#kodeBarang").focus();
         }
       },
       error: function (e) {
@@ -39,6 +41,47 @@ $("#tombolTambahBarang").on("click", function () {
   } else {
     alt("error", "Maaf..", "Silakan lengkapi form !");
   }
+});
+
+$("#kodeBarang").on("change", function () {
+  kodeBarang = $(this).val();
+
+  $.ajax({
+    url: "/admin/getDataBarangByKode",
+    type: "post",
+    data: { kodeBarang },
+    dataType: "json",
+    success: function (data) {
+      if (data != "0") {
+        console.log(data);
+        $("#namaBarang").val(data.namaBarang);
+        $("#jenisBarang").val(data.jenisBarang);
+        $("#satuan").val(data.satuan);
+        $("#stokBarang").focus();
+        $(".target").attr(
+          "class",
+          "input-group input-group-outline mb-4 focused is-focused target"
+        );
+        $("#target2").html(
+          "Kode barang telah diinputkan sebelumnya, jumlah barang akan ditambahkan ke stok"
+        );
+      }
+      if (data == "0") {
+        $("#namaBarang").val("");
+        $("#jenisBarang").val("");
+        $("#satuan").val("");
+        $("#namaBarang").focus();
+        $(".target").attr(
+          "class",
+          "input-group input-group-outline mb-4 target"
+        );
+        $("#target2").html("");
+      }
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
 });
 
 // Jika tombol hapus satu barang di klik maka jalankan kode berikut

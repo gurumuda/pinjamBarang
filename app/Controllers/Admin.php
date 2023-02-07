@@ -398,6 +398,24 @@ class Admin extends BaseController
         echo json_encode($barang);
     }
 
+    public function getDataBarangByKode()
+    {
+        $kodeBarang = $this->request->getVar('kodeBarang');
+
+        $dataBarang = new ModelDaftarBarang();
+
+        $barang = $dataBarang
+            ->where('kodeBarang', $kodeBarang)
+            ->first();
+
+        if ($barang) {
+            # code...
+            echo json_encode($barang);
+        } else {
+            echo "0";
+        }
+    }
+
     public function ubahDataBarang()
     {
         $id = $this->request->getVar('idUbahBarang');

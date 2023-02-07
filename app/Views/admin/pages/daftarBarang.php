@@ -90,30 +90,30 @@
                 </button>
             </div>
             <div class="modal-body">
+                <small class="text-info mb-2" id="target2" style="display: inline-block; font-size:9pt"></small>
                 <div class="input-group input-group-outline mb-4">
                     <label class="form-label">Kode Barang</label>
                     <input type="text" name="kodeBarang" id="kodeBarang" class="form-control">
                 </div>
-                <div class="input-group input-group-outline mb-4">
+                <div class="input-group input-group-outline mb-4 target">
                     <label class="form-label">Nama Barang</label>
                     <input type="text" name="namaBarang" id="namaBarang" class="form-control">
                 </div>
                 <div class="input-group input-group-outline mb-4">
                     <select name="jenisBarang" id="jenisBarang" class="form-control">
                         <option value="">-- Pilih Kategori Barang --</option>
-                        <option value="1">Barang Modal</option>
                         <option value="2">Barang Habis Pakai</option>
+                        <option value="1">Barang Modal</option>
                     </select>
                 </div>
-                <div class="input-group input-group-outline mb-4">
+                <div class="input-group input-group-outline mb-4 target">
                     <label class="form-label">Jumlah Barang</label>
                     <input type="number" name="stokBarang" id="stokBarang" class="form-control">
                 </div>
-                <div class="input-group input-group-outline">
+                <div class="input-group input-group-outline target">
                     <label class="form-label">Satuan Jumlah</label>
                     <input type="text" name="satuan" id="satuan" class="form-control">
                 </div>
-                <small class="mb-4" style="font-size: 8pt;">buah, lusin, box, lembar, liter, kg, meter, dll</small>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -154,8 +154,8 @@
                     </div>
                     <select name="ubahJenisBarang" id="ubahJenisBarang" class="form-control" required>
                         <option value="">-- Pilih Jenis Barang --</option>
-                        <option value="1">Elektronik</option>
-                        <option value="2">Cair</option>
+                        <option value="2">Barang Habis Pakai</option>
+                        <option value="1">Barang Modal</option>
                     </select>
                 </div>
                 <div class="input-group input-group-outline mb-2">
