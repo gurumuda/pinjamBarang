@@ -180,7 +180,7 @@
 
     <div class="modal fade" id="modalAmbilBarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="background-color: rgb(255, 0, 0);">
+            <div class="modal-content" style="background-color: rgb(255, 122, 0);">
                 <div class="modal-header">
                     <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Ambil Barang Habis Pakai</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
