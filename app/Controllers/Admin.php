@@ -496,11 +496,22 @@ class Admin extends BaseController
     {
         $dataPinjam = new ModelDataPinjamBarang();
         $data['pinjam'] = $dataPinjam
+            ->select('*, datapinjambarang.id as idP')
             ->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')
             ->orderBy('status', 'ASC')
             ->orderBy('dataPinjamBarang.id', 'DESC')
             ->findAll();
         return \view('admin/pages/daftarBarangDipinjam', $data);
+    }
+
+    public function getDataBarangKembalikan()
+    {
+        $idP = $this->request->getVar('idP');
+
+        $dataPinjam = new ModelDataPinjamBarang();
+        $data = $dataPinjam->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')->where('dataPinjamBarang.id', $idP)->first();
+
+        echo json_encode($data);
     }
 
     public function daftarBarangDiambil()

@@ -548,3 +548,33 @@ $("#amKodeBarang").on("change", function () {
     },
   });
 });
+
+
+$(".tbProsesKembaliBrg").on("click", function() {
+  idP = $(this).data("id")
+
+  $("#modalKembaliBarangModal").modal("show")
+
+  $.ajax({
+    url: '/admin/getDataBarangKembalikan',
+    type: 'post',
+    data: {idP},
+    dataType: 'json',
+    success: function(data) {
+      console.log(data)
+      $("#kbIdBarang").val(data.idBarang);
+      $("#kbIdPinjaman").val(data.id);
+      $("#kbKodeBarang").val(data.kodeBarang);
+      $("#kbNamaPeminjam").val(data.namaPeminjam);
+      $("#kbNamaBarang").val(data.namaBarang);
+      $("#kbJumlahDipinjam").val(data.jumlahBarang);
+      $("#jumlahBarangKembali").val(
+        Number(data.jumlahBarang) - Number(data.jumlahKembali)
+      );
+
+    },
+    error: function(e) {
+      console.log(e)
+    }
+  })
+})
