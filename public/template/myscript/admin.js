@@ -214,6 +214,7 @@ $("#pjKodeBarang").on("change", function () {
         $("#pjIdBarang").val(data.id);
         $("#pjNamaBarang").val(data.namaBarang);
         $("#pjStokBarang").val(data.stokBarang);
+        $("#pjSatuan").val(data.satuan);
       } else {
         alt(
           "warning",
@@ -532,6 +533,7 @@ $("#amKodeBarang").on("change", function () {
         $("#amIdBarang").val(data.id);
         $("#amNamaBarang").val(data.namaBarang);
         $("#amStokBarang").val(data.stokBarang);
+        $("#amSatuan").val(data.satuan);
       } else {
         alt("warning", "Maaf !", "Data tidak ditemukan atau kode barang modal");
         setTimeout(() => {

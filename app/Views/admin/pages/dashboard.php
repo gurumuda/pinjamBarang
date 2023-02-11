@@ -78,6 +78,12 @@
                     </div>
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Satuan</label>
+                            <input type="text" readonly name="pjSatuan" id="pjSatuan" class="form-control" placeholder="Auto Load">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
                             <label for="" class="col-4">Nama Peminjam</label>
                             <input type="text" name="namaPeminjam" id="namaPeminjam" class="form-control" placeholder="Masukkan nama peminjam">
                         </div>
@@ -88,6 +94,7 @@
                             <input type="number" name="jumlahBarang" id="jumlahBarang" class="form-control" placeholder="Masukkan jumlah barang yang dipinjam">
                         </div>
                     </div>
+                   
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Pinjam</label>
@@ -180,7 +187,7 @@
 
     <div class="modal fade" id="modalAmbilBarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="background-color: rgb(255, 0, 0);">
+            <div class="modal-content" style="background-color: rgb(255, 100, 0);">
                 <div class="modal-header">
                     <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Ambil Barang Habis Pakai</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
@@ -207,6 +214,12 @@
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Stok Barang</label>
                             <input type="text" readonly name="amStokBarang" id="amStokBarang" class="form-control" placeholder="Auto Load">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Satuan</label>
+                            <input type="text" readonly name="amSatuan" id="amSatuan" class="form-control" placeholder="Auto Load">
                         </div>
                     </div>
                     <div class="row mb-2">
