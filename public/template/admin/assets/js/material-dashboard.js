@@ -129,7 +129,6 @@ function sidebarColor(a) {
   localStorage.setItem("warna", color);
   let warna = localStorage.getItem("warna");
   
-
   if (parent.classList.contains('bg-gradient-primary')) {
     parent.classList.remove('bg-gradient-primary');
   }
@@ -154,9 +153,14 @@ function sidebarColor(a) {
 $(document).ready(function() {
   var parent = document.querySelector(".nav-link.active");
   let warna = localStorage.getItem("warna");
-  parent.classList.add('bg-gradient-' + warna);
 
-  console.log(warna)
+  if (warna != null) {
+    parent.classList.add('bg-gradient-' + warna);
+    
+  } else {
+    parent.classList.add('bg-gradient-primary');
+  }
+ 
 })
 
 

@@ -54,7 +54,7 @@ $uri = service('uri');; ?>
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-white <?= ($uri->getSegment(2) == '') ? 'active bg-gradient-primary' : ''; ?>" href="/admin">
+                    <a class="nav-link text-white <?= ($uri->getSegment(2) == '') ? 'active' : ''; ?>" href="/admin">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
@@ -62,7 +62,7 @@ $uri = service('uri');; ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white <?= ($uri->getSegment(2) == 'daftarBarang') ? 'active bg-gradient-primary' : ''; ?>" href="/admin/daftarBarang">
+                    <a class="nav-link text-white <?= ($uri->getSegment(2) == 'daftarBarang') ? 'active' : ''; ?>" href="/admin/daftarBarang">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">table_view</i>
                         </div>
@@ -70,7 +70,7 @@ $uri = service('uri');; ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white <?= ($uri->getSegment(2) == 'daftarBarangDipinjam') ? 'active bg-gradient-primary' : ''; ?>" href="/admin/daftarBarangDipinjam">
+                    <a class="nav-link text-white <?= ($uri->getSegment(2) == 'daftarBarangDipinjam') ? 'active' : ''; ?>" href="/admin/daftarBarangDipinjam">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">shopping_cart_checkout</i>
                         </div>
@@ -78,7 +78,7 @@ $uri = service('uri');; ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white <?= ($uri->getSegment(2) == 'daftarBarangDiambil') ? 'active bg-gradient-primary' : ''; ?>" href="/admin/daftarBarangDiambil">
+                    <a class="nav-link text-white <?= ($uri->getSegment(2) == 'daftarBarangDiambil') ? 'active' : ''; ?>" href="/admin/daftarBarangDiambil">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">sync_disabled</i>
                         </div>
