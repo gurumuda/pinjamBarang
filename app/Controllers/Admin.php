@@ -504,6 +504,9 @@ class Admin extends BaseController
 
     public function daftarBarangDipinjam()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
         $dataPinjam = new ModelDataPinjamBarang();
         $data['pinjam'] = $dataPinjam
             ->select('*, datapinjambarang.id as idP')
@@ -527,6 +530,9 @@ class Admin extends BaseController
 
     public function daftarBarangDiambil()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
         $dataAmbil = new ModelAmbilBarang();
         $data['ambil'] = $dataAmbil
             ->join('dataBarang', 'dataBarang.id = dataAmbilBarang.idBarang')
@@ -565,6 +571,9 @@ class Admin extends BaseController
 
     public function users()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
         $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
         $data['users'] = $this->dataPengguna->where('level', '1')->findAll();
 

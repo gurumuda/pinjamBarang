@@ -346,11 +346,11 @@ $uri = service('uri');; ?>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="/template/admin/assets/js/material-dashboard.min.js?v=3.0.4"></script>
+    <!-- <script src="/template/admin/assets/js/material-dashboard.min.js?v=3.0.4"></script> -->
     <script src="/template/myscript/jquery-3.6.3.min.js"></script>
     <script src="/template/myscript/datetimepicker-master/jquery.datetimepicker.full.js"></script>
     <script src="/template/myscript/datetimepicker-master/jquery.datetimepicker.js"></script>
-    <script src="/template/admin/assets/js/material-dashboard.min.js?v=3.0.4"></script>
+    <script src="/template/admin/assets/js/material-dashboard.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -374,6 +374,7 @@ $uri = service('uri');; ?>
             jQuery('#filter-date, #filter-date-2, #filter-date-3, #search-from-date, #search-to-date').datetimepicker();
         });
     </script>
+
 </body>
 
 </html>
