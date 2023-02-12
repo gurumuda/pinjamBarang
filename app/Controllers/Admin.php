@@ -7,6 +7,7 @@ use App\Models\ModelDaftarBarang;
 use App\Models\ModelDataPinjamBarang;
 use App\Models\ModelDaftarPesanan;
 use App\Models\ModelAmbilBarang;
+use App\Models\ModelPengguna;
 use Picqer;
 
 
@@ -14,6 +15,13 @@ use Picqer;
 class Admin extends BaseController
 {
     protected $helpers = ['my_helper', 'form'];
+    
+    
+    public function __construct()
+    {
+        $this->dataPengguna = new ModelPengguna();
+    }
+    
 
     public function index()
     {
@@ -23,6 +31,7 @@ class Admin extends BaseController
 
         $dataPesanan = new ModelDaftarPesanan();
         $dataBarang = new ModelDaftarBarang();
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
 
         $data['pesanan'] = $dataPesanan
             ->select('*, dataBarang.id as idB, daftarPesanan.id as idP, daftarPesanan.keperluan as kepPesanan')
@@ -314,6 +323,7 @@ class Admin extends BaseController
             'pager' => $dataBarang->pager,
             'nomor' => nomor($this->request->getVar('page_dataBarang'), 6)
         ];
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
 
         return view('admin/pages/daftarBarang', $data);
     }
@@ -501,6 +511,7 @@ class Admin extends BaseController
             ->orderBy('status', 'ASC')
             ->orderBy('dataPinjamBarang.id', 'DESC')
             ->findAll();
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
         return \view('admin/pages/daftarBarangDipinjam', $data);
     }
 
@@ -521,6 +532,70 @@ class Admin extends BaseController
             ->join('dataBarang', 'dataBarang.id = dataAmbilBarang.idBarang')
             ->orderBy('dataAmbilBarang.id', 'DESC')
             ->findAll();
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
         return \view('admin/pages/daftarBarangDiambil', $data);
+    }
+
+    public function updatePengguna()
+    {
+        $email = $this->request->getVar('email');
+        $nama = $this->request->getVar('nama');
+        $password = $this->request->getVar('password');
+
+        $id = $this->dataPengguna->where('email', session()->get('email'))->first()->id;
+
+        if ($password != '') {
+            $data = [
+                'id' => $id,
+                'email' => $email,
+                'nama' => $nama,
+                'pass' => password_hash($password, PASSWORD_DEFAULT)
+            ];
+        } else {
+            $data = [
+                'id' => $id,
+                'email' => $email,
+                'nama' => $nama
+            ];
+        }
+
+        $this->dataPengguna->save($data);
+        return redirect()->to('admin/logout');
+    }
+
+    public function users()
+    {
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['users'] = $this->dataPengguna->where('level', '1')->findAll();
+
+       return view('admin/pages/users', $data);
+    }
+
+    public function tambahUser()
+    {
+        $email = $this->request->getVar('emailUser');
+        $nama = $this->request->getVar('namaUser');
+        $pass = $this->request->getVar('passwordUser');
+
+        $ada = $this->dataPengguna->where('email', $email)->first();
+
+        if ($ada) {
+            echo '2';
+        } else {
+            $data = [
+                'email' => $email,
+                'nama' => $nama,
+                'pass' => password_hash($pass, PASSWORD_DEFAULT)
+            ];
+    
+            $simpan = $this->dataPengguna->save($data);
+
+            echo "1";
+        }
+        
+
+
+        
+
     }
 }

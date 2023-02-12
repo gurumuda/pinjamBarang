@@ -98,7 +98,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Pinjam</label>
-                            <input type="text" name="waktu" id="filter-date-2" class="form-control" placeholder="Tanggal dan waktu pinjam">
+                            <input type="text" name="waktu" id="filter-date-2" autocomplete="off" class="form-control" placeholder="Tanggal dan waktu pinjam">
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -172,7 +172,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Kembali</label>
-                            <input type="text" name="waktu" id="filter-date" class="form-control" placeholder="Tanggal dan waktu kembali">
+                            <input type="text" name="waktu" id="filter-date"  autocomplete="off" class="form-control" placeholder="Tanggal dan waktu kembali">
                         </div>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Ambil</label>
-                            <input type="text" name="waktu" id="filter-date-3" class="form-control" placeholder="Tanggal dan waktu ambil">
+                            <input type="text" name="waktu" id="filter-date-3"  autocomplete="off" class="form-control" placeholder="Tanggal dan waktu ambil">
                         </div>
                     </div>
                     <div class="row mb-2">

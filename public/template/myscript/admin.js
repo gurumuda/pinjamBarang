@@ -133,7 +133,7 @@ function konf(nama, id, url) {
 }
 
 // Jika modal ditutup maka jalankan reload halaman tersebut
-$("#modalTambahBarang, #modalPinjamBarangModal").on(
+$("#modalTambahBarang, #modalPinjamBarangModal, #modalTambahPengguna").on(
   "hidden.bs.modal",
   function () {
     document.location.reload();
@@ -577,4 +577,40 @@ $(".tbProsesKembaliBrg").on("click", function() {
       console.log(e)
     }
   })
+})
+
+$("#tombolSimpanUser").on("click", function() {
+  emailUser = $("#emailUser").val();
+  namaUser = $("#namaUser").val();
+  passwordUser = $("#passwordUser").val();
+ 
+  if (
+    emailUser != '' &&
+    namaUser != '' &&
+    passwordUser !=''
+  ) {
+    $.ajax({
+      url: "/admin/tambahUser",
+      type: "post",
+      data: {
+        emailUser,
+        namaUser,
+        passwordUser
+      },
+      success: function (data) {
+        if (data == "1") {
+          ntf("Data berhasil ditambah");
+          $("#emailUser").focus();
+        } else if (data == "2") {
+          alt("error", "Maaf..", "Terjadi duplikasi data email !");         
+          $("#emailUser").focus();
+        }
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+  } else {
+    alt("error", "Maaf..", "Silakan lengkapi form !");
+  }
 })
