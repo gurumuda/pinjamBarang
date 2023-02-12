@@ -4,7 +4,7 @@
 
 Aplikasi ini dibuat untuk mempermudah dalam manajemen dan penggunaan barang milik sekolah.
 
-Status aplikasi dalam proses pembuatan
+Status aplikasi dalam proses pengembangan
 
 ## Keperluan Server
 
