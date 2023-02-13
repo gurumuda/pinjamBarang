@@ -614,3 +614,29 @@ $("#tombolSimpanUser").on("click", function() {
     alt("error", "Maaf..", "Silakan lengkapi form !");
   }
 })
+
+$(".tombolHapusUser").on("click", function () {
+  id = $(this).data("id");
+  nama = $(this).data("nama");
+  konf(nama, id, "/admin/hapusUser");
+});
+
+$(".tombolUbahUser").on("click", function () {
+  $("#modalUbahPengguna").modal("show");
+  id = $(this).data("id");
+  $.ajax({
+    url: "/admin/getDataUser",
+    type: "post",
+    data: { id },
+    dataType: "json",
+    success: function (data) {
+      $("#idUser").val(data.id);
+      $("#u_emailUser").val(data.email);
+      $("#u_namaUser").val(data.nama);
+      
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+});

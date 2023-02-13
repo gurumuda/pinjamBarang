@@ -31,7 +31,7 @@
                                     <td><?= $user->email;?></td>
                                     <td>
                                         <span type="button" data-id="<?= $user->id;?>" class="badge bg-warning tombolUbahUser">Ubah</span>
-                                        <span type="button" data-id="<?= $user->id;?>" class="badge bg-danger tombolHapusUser">Hapus</span>
+                                        <span type="button" data-id="<?= $user->id;?>" data-id="<?= $user->nama;?>" class="badge bg-danger tombolHapusUser">Hapus</span>
                                     </td>
                                 </tr>
                               <?php endforeach;?>
@@ -87,7 +87,46 @@
              
             </div>
         </div>
-    </div>
+</div>
+
+<div class="modal fade" id="modalUbahPengguna" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Tambah data pengguna</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+               <?= form_open('admin/prosesUbahUser') ;?>
+               <input type="hidden" name="idUser" id="idUser">
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Email Login</label>
+                            <input type="email" name="u_emailUser" id="u_emailUser" required class="form-control" placeholder="Masukkan Email Login User" >
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nama Pengguna</label>
+                            <input type="text"  name="u_namaUser" id="u_namaUser" required class="form-control" placeholder="Masukkan nama user" >
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Password Login</label>
+                            <input type="text"  name="u_passwordUser" id="u_passwordUser" class="form-control" placeholder="Password Login">
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-warning" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" id="tombolSimpanUser" class="btn bg-gradient-success">Simpan</button>
+                </div>
+             <?= form_close() ;?>
+            </div>
+        </div>
+</div>
 
 
 <?= $this->endSection() ?>

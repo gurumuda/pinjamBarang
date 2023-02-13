@@ -601,10 +601,50 @@ class Admin extends BaseController
 
             echo "1";
         }
-        
+    
+    }
 
+    public function hapusUser()
+    {
+        $id = $this->request->getVar('id');
+        $this->dataPengguna->delete($id);
+    }
 
+    public function getDataUser()
+    {
+        $id = $this->request->getVar('id');
+        $data = $this->dataPengguna->where('id', $id)->first();
+        echo json_encode($data);
+    }
+
+    public function prosesUbahUser()
+    {
+        $id = $this->request->getVar('idUser');
+        $email = $this->request->getVar('u_emailUser');
+        $nama = $this->request->getVar('u_namaUser');
+        $pass = $this->request->getVar('u_passwordUser');
+
+        if ($pass !='') {
+            $data = [
+                'id' => $id,
+                'email' => $email,
+                'nama' => $nama,
+                'pass' => password_hash($pass, PASSWORD_DEFAULT)
+            ];
+        } else {
+            $data = [
+                'id' => $id,
+                'email' => $email,
+                'nama' => $nama
+            ];
+        }
         
+        $simpan = $this->dataPengguna->save($data);
+        if ($simpan) {
+            session()->setFlashdata('tipe', 'success');
+            session()->setFlashdata('pesan', 'Data berhasil disimpan');
+        }
+        return redirect()->back();
 
     }
 }
