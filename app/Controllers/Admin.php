@@ -690,7 +690,6 @@ class Admin extends BaseController
         $pesan = 'Mohon segera melakukan pengembalian barang yang telah dipinjam berupa:
 '.$data->namaBarang;
 
-
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
