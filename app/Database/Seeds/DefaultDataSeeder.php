@@ -24,5 +24,12 @@ class DefaultDataSeeder extends Seeder
         ];
 
         $this->db->table('pengguna')->insertBatch($data);
+
+        $dataInstansi = [
+            'namaInstansi' => 'SMAN 1 Jorong',
+            'alamat' => 'Jl A Yani Km 96 Jorong Kab. Tanah Laut'
+        ];
+
+        $this->db->table('instansi')->insert($dataInstansi);
     }
 }

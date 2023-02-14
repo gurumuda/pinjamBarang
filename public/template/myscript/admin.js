@@ -640,3 +640,42 @@ $(".tombolUbahUser").on("click", function () {
     },
   });
 });
+
+
+$(".tbTagih").on("click", function () {
+  id = $(this).data("id");
+  nama = $(this).data("nama");
+
+  Swal.fire({
+    title: "Anda akan mengingatkan "+ nama,
+    text: "untuk mengembalikan barang ",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Kirim",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "/admin/tagihBarang",
+        type: "post",
+        data: { id },
+        dataType : 'json',
+        success: function (data) {
+
+          console.log(data)
+
+          // if (data === '1') {
+          //   Swal.fire("Success!", "Pesan berhasil dikirim.", "success");
+          // } else {
+          //   Swal.fire("Gagal!", "Pesan gagal dikirim.", "error");
+          // }
+
+          // setTimeout(function () {
+          //   location.reload();
+          // }, 1000);
+        },
+      });
+    }
+  });
+});

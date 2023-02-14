@@ -8,6 +8,7 @@ use App\Models\ModelDataPinjamBarang;
 use App\Models\ModelDaftarPesanan;
 use App\Models\ModelAmbilBarang;
 use App\Models\ModelPengguna;
+use App\Models\ModelInstansi;
 use Picqer;
 
 
@@ -20,6 +21,7 @@ class Admin extends BaseController
     public function __construct()
     {
         $this->dataPengguna = new ModelPengguna();
+        $this->dataInstansi = new ModelInstansi();
     }
     
 
@@ -32,6 +34,7 @@ class Admin extends BaseController
         $dataPesanan = new ModelDaftarPesanan();
         $dataBarang = new ModelDaftarBarang();
         $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
 
         $data['pesanan'] = $dataPesanan
             ->select('*, dataBarang.id as idB, daftarPesanan.id as idP, daftarPesanan.keperluan as kepPesanan')
@@ -324,6 +327,7 @@ class Admin extends BaseController
             'nomor' => nomor($this->request->getVar('page_dataBarang'), 6)
         ];
         $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
 
         return view('admin/pages/daftarBarang', $data);
     }
@@ -515,6 +519,7 @@ class Admin extends BaseController
             ->orderBy('dataPinjamBarang.id', 'DESC')
             ->findAll();
         $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
         return \view('admin/pages/daftarBarangDipinjam', $data);
     }
 
@@ -539,6 +544,7 @@ class Admin extends BaseController
             ->orderBy('dataAmbilBarang.id', 'DESC')
             ->findAll();
         $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
         return \view('admin/pages/daftarBarangDiambil', $data);
     }
 
@@ -575,6 +581,7 @@ class Admin extends BaseController
             return redirect()->to('login');
         }
         $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
         $data['users'] = $this->dataPengguna->where('level', '1')->findAll();
 
        return view('admin/pages/users', $data);
@@ -645,6 +652,69 @@ class Admin extends BaseController
             session()->setFlashdata('pesan', 'Data berhasil disimpan');
         }
         return redirect()->back();
+
+    }
+
+    public function updateInstansi()
+    {
+        $namaInstansi = $this->request->getVar('namaInstansi');
+        $alamat = $this->request->getVar('alamat');
+        $api = $this->request->getVar('api');
+
+        $data = [
+            'id' => '1',
+            'namaInstansi' => $namaInstansi,
+            'alamat' => $alamat,
+            'api' => $api,
+        ];
+
+        $simpan = $this->dataInstansi->save($data);
+        if ($simpan) {
+            session()->setFlashdata('tipe', 'success');
+            session()->setFlashdata('pesan', 'Data berhasil disimpan');
+        }
+        return redirect()->back();
+    }
+
+    public function tagihBarang()
+    {
+        // $id = $this->request->getVar('idUser');
+        $id = '2';
+        $api = $this->dataInstansi->first()->api;
+
+        $dataPinjamBarang = new ModelDataPinjamBarang();
+        $data = $dataPinjamBarang->where('datapinjambarang.id', $id)
+        ->join('databarang', 'databarang.kodeBarang = datapinjambarang.kodeBarang', 'left')
+        ->first();
+
+        $pesan = 'Mohon segera melakukan pengembalian barang yang telah dipinjam berupa:
+'.$data->namaBarang;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_HEADER => 'Content-Type: application/json',
+        CURLOPT_URL => $api,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array(
+            'message' => $pesan,
+            'number' => $data->phone,
+            'token' => 'TokenSaya'
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo (json_encode($response));
+
+
 
     }
 }

@@ -262,6 +262,50 @@ $uri = service('uri');; ?>
         </div>
     </div>
 
+    <div class="modal fade" id="setInstansi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-gradient-info">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Pengaturan Akun Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <?= form_open_multipart('/admin/updateInstansi'); ?>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nama Instansi</label>
+                            <input type="text" name="namaInstansi" id="namaInstansi" required class="form-control" placeholder="Masukkan Nama Instansi" value="<?= $instansi->namaInstansi ;?>">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Alamat Instansi</label>
+                            <textarea name="alamat" id="alamat" class="form-control" rows="2"><?= $instansi->alamat;?></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Api Whatsapp</label>
+                            <input type="text" name="api" id="api" class="form-control" placeholder="Masukkan API Whatsapp" value="<?= $instansi->api ;?>">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Logo</label>
+                            <input type="file" name="logo" id="logo">
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-warning" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn bg-gradient-success">Simpan</button>
+                </div>
+                <?= form_close(); ?>
+            </div>
+        </div>
+    </div>
+
 
     <div class="fixed-plugin">
         <a class="fixed-plugin-button text-white bg-warning position-fixed px-3 py-2">
@@ -285,6 +329,7 @@ $uri = service('uri');; ?>
                 <div class="mb-0">
                 <button class="btn bg-gradient-danger text-white" data-bs-toggle="modal" data-bs-target="#setAdmin"><i class="material-icons opacity-10 text-white">settings</i> Akun Admin</button>
                 <a href="/admin/users" class="btn bg-gradient-primary text-white"><i class="material-icons opacity-10 text-white">people</i> Pengguna</a>
+                <button class="btn bg-gradient-info text-white" data-bs-toggle="modal" data-bs-target="#setInstansi"><i class="material-icons opacity-10 text-white">account_balance</i> Instansi</button>
                 </div>
                 <hr class="horizontal dark my-sm-4">
                 <div>

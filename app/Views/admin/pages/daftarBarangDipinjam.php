@@ -19,6 +19,7 @@
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Kode Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Peminjam</th>
+                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Phone</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Jml Pinjam</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Jml Kembali</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Tanggal Pinjam</th>
@@ -33,13 +34,14 @@
                                         <td class="text-xs"><?= $brg->kodeBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaPeminjam; ?></td>
+                                        <td class="text-xs"><?= $brg->phone; ?></td>
                                         <td class="text-xs"><?= $brg->jumlahBarang; ?></td>
                                         <td class="text-xs"><?= $brg->jumlahKembali; ?></td>
                                         <td class="text-xs"><?= $brg->tanggalPinjam; ?></td>
                                         <td class="text-xs"><?= $brg->waktuPinjam; ?></td>
                                         <td class="text-xs"><?= $brg->keperluan; ?></td>
                                         <td class="text-xs">
-                                            <?= ($brg->status == '0') ? '<span type="button" data-id="'.$brg->idP.'" class="badge bg-danger tbProsesKembaliBrg">Proses</span>' : '' ?>
+                                            <?= ($brg->status == '0') ? '<span type="button" data-id="'.$brg->idP.'" class="badge bg-danger tbProsesKembaliBrg">Proses</span> <span type="button" data-id="'.$brg->idP.'" data-nama="'.$brg->namaPeminjam.'" class="badge bg-info tbTagih">Ingatkan</span>' : '' ?>
                                         <?= ($brg->status == '1') ? '<span class="badge bg-success">Kembali</span>' : '<span class="badge bg-warning">Belum Kembali</span>'; ?></td>
                                     </tr>
                                 <?php endforeach; ?>
