@@ -678,8 +678,8 @@ class Admin extends BaseController
 
     public function tagihBarang()
     {
-        // $id = $this->request->getVar('idUser');
-        $id = '2';
+        $id = $this->request->getVar('id');
+        // $id = '2';
         $api = $this->dataInstansi->first()->api;
 
         $dataPinjamBarang = new ModelDataPinjamBarang();
@@ -690,30 +690,28 @@ class Admin extends BaseController
         $pesan = 'Mohon segera melakukan pengembalian barang yang telah dipinjam berupa:
 '.$data->namaBarang;
 
-        $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_HEADER => 'Content-Type: application/json',
-        CURLOPT_URL => $api,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array(
-            'message' => $pesan,
-            'number' => $data->phone,
-            'token' => 'TokenSaya'
-        ),
-        ));
+    $curl = curl_init();
 
-        $response = curl_exec($curl);
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'http://mywapi.guru-muda.com/kirim-pesan',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => array(
+        'message' => $pesan,
+        'number' => $data->phone,
+        'token' => 'TokenSaya'),
+    ));
 
-        curl_close($curl);
-        echo (json_encode($response));
+    $response = curl_exec($curl);
 
+    curl_close($curl);
+    echo $response;
 
 
     }

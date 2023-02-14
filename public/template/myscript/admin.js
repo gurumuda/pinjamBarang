@@ -663,17 +663,17 @@ $(".tbTagih").on("click", function () {
         dataType : 'json',
         success: function (data) {
 
-          console.log(data)
+          console.log(data.status)
 
-          // if (data === '1') {
-          //   Swal.fire("Success!", "Pesan berhasil dikirim.", "success");
-          // } else {
-          //   Swal.fire("Gagal!", "Pesan gagal dikirim.", "error");
-          // }
+          if (data.status == true) {
+            Swal.fire("Success!", "Pesan berhasil dikirim.", "success");
+          } else {
+            Swal.fire("Gagal!", "Pesan gagal dikirim.", "error");
+          }
 
-          // setTimeout(function () {
-          //   location.reload();
-          // }, 1000);
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
         },
       });
     }
