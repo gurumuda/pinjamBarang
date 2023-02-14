@@ -36,6 +36,8 @@ class Admin extends BaseController
         $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
         $data['instansi'] = $this->dataInstansi->first();
 
+        $data['users'] = $this->dataPengguna->orderBy('nama', 'ASC')->where('level', '1')->findAll();
+
         $data['pesanan'] = $dataPesanan
             ->select('*, dataBarang.id as idB, daftarPesanan.id as idP, daftarPesanan.keperluan as kepPesanan')
             ->join('dataBarang', 'dataBarang.id = daftarPesanan.idBarang', 'LEFT')
@@ -116,6 +118,7 @@ class Admin extends BaseController
         $idBarang = $this->request->getVar('pjIdBarang');
         $kodeBarang = $this->request->getVar('pjKodeBarang');
         $namaPeminjam = $this->request->getVar('namaPeminjam');
+        $phone = $this->request->getVar('hpPeminjam');
         $jumlahBarang = $this->request->getVar('jumlahBarang');
         $waktu = $this->request->getVar('waktu');
         $keperluan = $this->request->getVar('keperluan');
@@ -130,6 +133,7 @@ class Admin extends BaseController
             'idBarang' => $idBarang,
             'kodeBarang' => $kodeBarang,
             'namaPeminjam' => $namaPeminjam,
+            'phone' => $phone,
             'jumlahBarang' => $jumlahBarang,
             'jumlahKembali' => 0,
             'tanggalPinjam' => $tanggalPinjam,
@@ -528,7 +532,7 @@ class Admin extends BaseController
         $idP = $this->request->getVar('idP');
 
         $dataPinjam = new ModelDataPinjamBarang();
-        $data = $dataPinjam->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')->where('dataPinjamBarang.id', $idP)->first();
+        $data = $dataPinjam->select('*, dataPinjamBarang.id as idP')->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')->where('dataPinjamBarang.id', $idP)->first();
 
         echo json_encode($data);
     }
@@ -713,5 +717,18 @@ class Admin extends BaseController
     curl_close($curl);
     echo $response;
 
+    }
+
+    public function getNomorHp()
+    {
+        $nama = $this->request->getVar('nama');
+
+        $data = $this->dataPengguna->where('nama', $nama)->first();
+      
+        if ($data) {
+            echo json_encode($data);
+        } else {
+            echo '0';
+        }
     }
 }

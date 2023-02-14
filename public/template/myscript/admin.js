@@ -563,7 +563,7 @@ $(".tbProsesKembaliBrg").on("click", function() {
     success: function(data) {
       console.log(data)
       $("#kbIdBarang").val(data.idBarang);
-      $("#kbIdPinjaman").val(data.id);
+      $("#kbIdPinjaman").val(data.idP);
       $("#kbKodeBarang").val(data.kodeBarang);
       $("#kbNamaPeminjam").val(data.namaPeminjam);
       $("#kbNamaBarang").val(data.namaBarang);
@@ -679,3 +679,22 @@ $(".tbTagih").on("click", function () {
     }
   });
 });
+
+function pilihNama(nama) {
+  $.ajax({
+    url: "/admin/getNomorHp",
+    type: "post",
+    data: { nama },
+    dataType: 'json',
+    success: function (data) {
+      if (data != "0") {
+        $("#hpPeminjam").val(data.phone);
+      } else {
+        $("#hpPeminjam").val("");
+      }
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+}

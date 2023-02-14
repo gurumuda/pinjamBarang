@@ -8,6 +8,41 @@
     }
 </style>
 
+<style>
+
+/*the container must be positioned relative:*/
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 35%;
+  right: 10px;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+</style>
+
 <div class="container-fluid py-4">
     <div class="row">
 
@@ -83,9 +118,15 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="input-group input-group-outline">
+                        <div class="input-group input-group-outline autocomplete">
                             <label for="" class="col-4">Nama Peminjam</label>
-                            <input type="text" name="namaPeminjam" id="namaPeminjam" class="form-control" placeholder="Masukkan nama peminjam">
+                            <input autocomplete="off" type="text" name="namaPeminjam" id="namaPeminjam" class="form-control" placeholder="Masukkan nama peminjam">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline autocomplete">
+                            <label for="" class="col-4">Nomor HP</label>
+                            <input autocomplete="off" type="number" name="hpPeminjam" id="hpPeminjam" class="form-control" placeholder="Masukkan nomor WA peminjam">
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -404,5 +445,21 @@
     </div>
 
 </div>
+
+    <?php 
+    $nama = '';
+    foreach($users as $us) {
+        $nama .= '"';
+        $nama .= $us->nama;
+        $nama .= '",';
+    }?>
+<script>
+
+      /*An array containing all the country names in the world:*/
+var countries = [<?= $nama;?>];
+</script>
+
+<script src="/template/myscript/autocomplate.js"></script>
+
 
 <?= $this->endSection() ?>
