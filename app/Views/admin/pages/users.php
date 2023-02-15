@@ -74,6 +74,12 @@
                     </div>
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nomor HP</label>
+                            <input type="number"  name="noHP" id="noHP" required class="form-control" placeholder="Masukkan nomor hp (jika ada)" >
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
                             <label for="" class="col-4">Password Login</label>
                             <input type="text"  name="passwordUser" id="passwordUser" class="form-control" placeholder="Password Login">
                         </div>
@@ -109,6 +115,12 @@
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Nama Pengguna</label>
                             <input type="text"  name="u_namaUser" id="u_namaUser" required class="form-control" placeholder="Masukkan nama user" >
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group input-group-outline">
+                            <label for="" class="col-4">Nomor HP</label>
+                            <input type="number"  name="u_nomorHP" id="u_nomorHP" class="form-control" placeholder="Masukkan nomor hp (jika ada)" >
                         </div>
                     </div>
                     <div class="row mb-2">

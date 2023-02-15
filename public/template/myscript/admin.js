@@ -583,6 +583,7 @@ $("#tombolSimpanUser").on("click", function() {
   emailUser = $("#emailUser").val();
   namaUser = $("#namaUser").val();
   passwordUser = $("#passwordUser").val();
+  noHP = $("#noHP").val();
  
   if (
     emailUser != '' &&
@@ -595,6 +596,7 @@ $("#tombolSimpanUser").on("click", function() {
       data: {
         emailUser,
         namaUser,
+        noHP,
         passwordUser
       },
       success: function (data) {
@@ -633,6 +635,7 @@ $(".tombolUbahUser").on("click", function () {
       $("#idUser").val(data.id);
       $("#u_emailUser").val(data.email);
       $("#u_namaUser").val(data.nama);
+      $("#u_nomorHP").val(data.phone);
       
     },
     error: function (e) {

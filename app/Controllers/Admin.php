@@ -596,6 +596,7 @@ class Admin extends BaseController
         $email = $this->request->getVar('emailUser');
         $nama = $this->request->getVar('namaUser');
         $pass = $this->request->getVar('passwordUser');
+        $phone = $this->request->getVar('noHP');
 
         $ada = $this->dataPengguna->where('email', $email)->first();
 
@@ -605,6 +606,7 @@ class Admin extends BaseController
             $data = [
                 'email' => $email,
                 'nama' => $nama,
+                'phone' => $phone,
                 'pass' => password_hash($pass, PASSWORD_DEFAULT)
             ];
     
@@ -634,18 +636,22 @@ class Admin extends BaseController
         $email = $this->request->getVar('u_emailUser');
         $nama = $this->request->getVar('u_namaUser');
         $pass = $this->request->getVar('u_passwordUser');
+        $phone = $this->request->getVar('u_nomorHP');
+
 
         if ($pass !='') {
             $data = [
                 'id' => $id,
                 'email' => $email,
                 'nama' => $nama,
+                'phone' => $phone,
                 'pass' => password_hash($pass, PASSWORD_DEFAULT)
             ];
         } else {
             $data = [
                 'id' => $id,
                 'email' => $email,
+                'phone' => $phone,
                 'nama' => $nama
             ];
         }
@@ -661,6 +667,37 @@ class Admin extends BaseController
 
     public function updateInstansi()
     {
+        helper('filesystem');
+        $validationRule = [
+            'logo' => [
+                'label' => 'Image File',
+                'rules' => [
+                    'uploaded[logo]',
+                    'is_image[logo]',
+                    'mime_in[logo,image/jpg,image/jpeg,image/gif,image/png]',
+                ],
+            ],
+        ];
+        if (! $this->validate($validationRule)) {
+            $data = ['errors' => $this->validator->getErrors()];
+
+            // return view('upload_form', $data);
+        }
+
+        $img = $this->request->getFile('logo');
+        $img->move('logo/');
+        if (! $img->hasMoved()) {
+            $filepath = WRITEPATH . 'logo/' . $img->store();
+
+            $data = ['uploaded_fileinfo' => ($filepath)];
+
+            // return view('upload_success', $data);
+        }
+
+        // $data = ['errors' => 'The file has already been moved.'];
+
+        dd($data);
+
         $namaInstansi = $this->request->getVar('namaInstansi');
         $alamat = $this->request->getVar('alamat');
         $api = $this->request->getVar('api');
