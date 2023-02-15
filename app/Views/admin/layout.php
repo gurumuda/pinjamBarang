@@ -22,8 +22,8 @@ $uri = service('uri');; ?>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="/template/admin/assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="/template/admin/assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/logo/thumb/thumb_<?=$instansi->logo;?>">
+    <link rel="icon" type="image/png" href="/logo/thumb/thumb_<?=$instansi->logo;?>">
     <title>
         Halaman Administrator
     </title>
@@ -45,8 +45,8 @@ $uri = service('uri');; ?>
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
-                <img src="/template/admin/assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
+            <a class="navbar-brand m-0" href="javascript:void(0)" target="_blank">
+                <img src="/logo/thumb/thumb_<?=$instansi->logo;?>" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold text-white">Halaman Administrator</span>
             </a>
         </div>

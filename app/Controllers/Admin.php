@@ -667,7 +667,13 @@ class Admin extends BaseController
 
     public function updateInstansi()
     {
-        helper('filesystem');
+        $image = \Config\Services::image();
+
+        $namaInstansi = $this->request->getVar('namaInstansi');
+        $alamat = $this->request->getVar('alamat');
+        $api = $this->request->getVar('api');
+        $file = $this->request->getFile('logo');
+
         $validationRule = [
             'logo' => [
                 'label' => 'Image File',
@@ -679,36 +685,33 @@ class Admin extends BaseController
             ],
         ];
         if (! $this->validate($validationRule)) {
-            $data = ['errors' => $this->validator->getErrors()];
-
-            // return view('upload_form', $data);
+            $errors = ['errors' => $this->validator->getErrors()];
         }
 
-        $img = $this->request->getFile('logo');
-        $img->move('logo/');
-        if (! $img->hasMoved()) {
-            $filepath = WRITEPATH . 'logo/' . $img->store();
+        $newName = $file->getRandomName();
+        $up = $file->move('logo/', $newName);
+        
+        if ($up) {
+            $image->withFile('logo/'.$newName)
+                ->resize(30, 30, true, 'height')
+                ->save('logo/thumb/thumb_'.$newName);
 
-            $data = ['uploaded_fileinfo' => ($filepath)];
-
-            // return view('upload_success', $data);
+            $data = [
+                'id' => '1',
+                'namaInstansi' => $namaInstansi,
+                'alamat' => $alamat,
+                'logo' => $newName,
+                'api' => $api,
+            ];
+        } else {
+            $data = [
+                'id' => '1',
+                'namaInstansi' => $namaInstansi,
+                'alamat' => $alamat,
+                'api' => $api,
+            ];
         }
-
-        // $data = ['errors' => 'The file has already been moved.'];
-
-        dd($data);
-
-        $namaInstansi = $this->request->getVar('namaInstansi');
-        $alamat = $this->request->getVar('alamat');
-        $api = $this->request->getVar('api');
-
-        $data = [
-            'id' => '1',
-            'namaInstansi' => $namaInstansi,
-            'alamat' => $alamat,
-            'api' => $api,
-        ];
-
+        
         $simpan = $this->dataInstansi->save($data);
         if ($simpan) {
             session()->setFlashdata('tipe', 'success');
@@ -720,7 +723,7 @@ class Admin extends BaseController
     public function tagihBarang()
     {
         $id = $this->request->getVar('id');
-        // $id = '2';
+        
         $api = $this->dataInstansi->first()->api;
 
         $dataPinjamBarang = new ModelDataPinjamBarang();
