@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Pengguna extends Migration
+class DataInstansi extends Migration
 {
     public function up()
     {
@@ -14,25 +14,20 @@ class Pengguna extends Migration
                 'constraint'     => 11,
                 'auto_increment' => true,
             ],
-            'email' => [
+            'namaInstansi' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '30',
             ],
-            'pass' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '70',
+            'alamat' => [
+                'type'       => 'TEXT',
             ],
-            'nama' => [
+            'logo' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '30',
+                'constraint' => '60',
             ],
-            'phone' => [
+            'api' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '20',
-            ],
-            'level' => [
-                'type'       => 'ENUM("1","2")',
-                'default' => '1',
+                'constraint' => '60',
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -44,12 +39,11 @@ class Pengguna extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addUniqueKey('email', 'index');
-        $this->forge->createTable('pengguna');
+        $this->forge->createTable('instansi');
     }
 
     public function down()
     {
-        $this->forge->dropTable('pengguna');
+        $this->forge->dropTable('instansi');
     }
 }

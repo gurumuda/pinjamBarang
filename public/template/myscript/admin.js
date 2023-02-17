@@ -133,7 +133,7 @@ function konf(nama, id, url) {
 }
 
 // Jika modal ditutup maka jalankan reload halaman tersebut
-$("#modalTambahBarang, #modalPinjamBarangModal").on(
+$("#modalTambahBarang, #modalPinjamBarangModal, #modalTambahPengguna").on(
   "hidden.bs.modal",
   function () {
     document.location.reload();
@@ -214,6 +214,7 @@ $("#pjKodeBarang").on("change", function () {
         $("#pjIdBarang").val(data.id);
         $("#pjNamaBarang").val(data.namaBarang);
         $("#pjStokBarang").val(data.stokBarang);
+        $("#pjSatuan").val(data.satuan);
       } else {
         alt(
           "warning",
@@ -532,6 +533,7 @@ $("#amKodeBarang").on("change", function () {
         $("#amIdBarang").val(data.id);
         $("#amNamaBarang").val(data.namaBarang);
         $("#amStokBarang").val(data.stokBarang);
+        $("#amSatuan").val(data.satuan);
       } else {
         alt("warning", "Maaf !", "Data tidak ditemukan atau kode barang modal");
         setTimeout(() => {
@@ -546,3 +548,156 @@ $("#amKodeBarang").on("change", function () {
     },
   });
 });
+
+
+$(".tbProsesKembaliBrg").on("click", function() {
+  idP = $(this).data("id")
+
+  $("#modalKembaliBarangModal").modal("show")
+
+  $.ajax({
+    url: '/admin/getDataBarangKembalikan',
+    type: 'post',
+    data: {idP},
+    dataType: 'json',
+    success: function(data) {
+      console.log(data)
+      $("#kbIdBarang").val(data.idBarang);
+      $("#kbIdPinjaman").val(data.idP);
+      $("#kbKodeBarang").val(data.kodeBarang);
+      $("#kbNamaPeminjam").val(data.namaPeminjam);
+      $("#kbNamaBarang").val(data.namaBarang);
+      $("#kbJumlahDipinjam").val(data.jumlahBarang);
+      $("#jumlahBarangKembali").val(
+        Number(data.jumlahBarang) - Number(data.jumlahKembali)
+      );
+
+    },
+    error: function(e) {
+      console.log(e)
+    }
+  })
+})
+
+$("#tombolSimpanUser").on("click", function() {
+  emailUser = $("#emailUser").val();
+  namaUser = $("#namaUser").val();
+  passwordUser = $("#passwordUser").val();
+  noHP = $("#noHP").val();
+ 
+  if (
+    emailUser != '' &&
+    namaUser != '' &&
+    passwordUser !=''
+  ) {
+    $.ajax({
+      url: "/admin/tambahUser",
+      type: "post",
+      data: {
+        emailUser,
+        namaUser,
+        noHP,
+        passwordUser
+      },
+      success: function (data) {
+        if (data == "1") {
+          ntf("Data berhasil ditambah");
+          $("#emailUser").focus();
+        } else if (data == "2") {
+          alt("error", "Maaf..", "Terjadi duplikasi data email !");         
+          $("#emailUser").focus();
+        }
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+  } else {
+    alt("error", "Maaf..", "Silakan lengkapi form !");
+  }
+})
+
+$(".tombolHapusUser").on("click", function () {
+  id = $(this).data("id");
+  nama = $(this).data("nama");
+  konf(nama, id, "/admin/hapusUser");
+});
+
+$(".tombolUbahUser").on("click", function () {
+  $("#modalUbahPengguna").modal("show");
+  id = $(this).data("id");
+  $.ajax({
+    url: "/admin/getDataUser",
+    type: "post",
+    data: { id },
+    dataType: "json",
+    success: function (data) {
+      $("#idUser").val(data.id);
+      $("#u_emailUser").val(data.email);
+      $("#u_namaUser").val(data.nama);
+      $("#u_nomorHP").val(data.phone);
+      
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+});
+
+
+$(".tbTagih").on("click", function () {
+  id = $(this).data("id");
+  nama = $(this).data("nama");
+
+  Swal.fire({
+    title: "Anda akan mengingatkan "+ nama,
+    text: "untuk mengembalikan barang ",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Kirim",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "/admin/tagihBarang",
+        type: "post",
+        data: { id },
+        dataType : 'json',
+        success: function (data) {
+
+          console.log(data.status)
+
+          if (data.status == true) {
+            Swal.fire("Success!", "Pesan berhasil dikirim.", "success");
+          } else {
+            Swal.fire("Gagal!", "Pesan gagal dikirim.", "error");
+          }
+
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        },
+      });
+    }
+  });
+});
+
+function pilihNama(nama) {
+  $.ajax({
+    url: "/admin/getNomorHp",
+    type: "post",
+    data: { nama },
+    dataType: 'json',
+    success: function (data) {
+      if (data != "0") {
+        $("#hpPeminjam").val(data.phone);
+      } else {
+        $("#hpPeminjam").val("");
+      }
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+}

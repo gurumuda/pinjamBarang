@@ -7,6 +7,8 @@ use App\Models\ModelDaftarBarang;
 use App\Models\ModelDataPinjamBarang;
 use App\Models\ModelDaftarPesanan;
 use App\Models\ModelAmbilBarang;
+use App\Models\ModelPengguna;
+use App\Models\ModelInstansi;
 use Picqer;
 
 
@@ -14,6 +16,14 @@ use Picqer;
 class Admin extends BaseController
 {
     protected $helpers = ['my_helper', 'form'];
+    
+    
+    public function __construct()
+    {
+        $this->dataPengguna = new ModelPengguna();
+        $this->dataInstansi = new ModelInstansi();
+    }
+    
 
     public function index()
     {
@@ -23,6 +33,10 @@ class Admin extends BaseController
 
         $dataPesanan = new ModelDaftarPesanan();
         $dataBarang = new ModelDaftarBarang();
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
+
+        $data['users'] = $this->dataPengguna->orderBy('nama', 'ASC')->where('level', '1')->findAll();
 
         $data['pesanan'] = $dataPesanan
             ->select('*, dataBarang.id as idB, daftarPesanan.id as idP, daftarPesanan.keperluan as kepPesanan')
@@ -104,6 +118,7 @@ class Admin extends BaseController
         $idBarang = $this->request->getVar('pjIdBarang');
         $kodeBarang = $this->request->getVar('pjKodeBarang');
         $namaPeminjam = $this->request->getVar('namaPeminjam');
+        $phone = $this->request->getVar('hpPeminjam');
         $jumlahBarang = $this->request->getVar('jumlahBarang');
         $waktu = $this->request->getVar('waktu');
         $keperluan = $this->request->getVar('keperluan');
@@ -118,6 +133,7 @@ class Admin extends BaseController
             'idBarang' => $idBarang,
             'kodeBarang' => $kodeBarang,
             'namaPeminjam' => $namaPeminjam,
+            'phone' => $phone,
             'jumlahBarang' => $jumlahBarang,
             'jumlahKembali' => 0,
             'tanggalPinjam' => $tanggalPinjam,
@@ -314,6 +330,8 @@ class Admin extends BaseController
             'pager' => $dataBarang->pager,
             'nomor' => nomor($this->request->getVar('page_dataBarang'), 6)
         ];
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
 
         return view('admin/pages/daftarBarang', $data);
     }
@@ -494,22 +512,263 @@ class Admin extends BaseController
 
     public function daftarBarangDipinjam()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
         $dataPinjam = new ModelDataPinjamBarang();
         $data['pinjam'] = $dataPinjam
+            ->select('*, datapinjambarang.id as idP')
             ->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')
             ->orderBy('status', 'ASC')
             ->orderBy('dataPinjamBarang.id', 'DESC')
             ->findAll();
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
         return \view('admin/pages/daftarBarangDipinjam', $data);
+    }
+
+    public function getDataBarangKembalikan()
+    {
+        $idP = $this->request->getVar('idP');
+
+        $dataPinjam = new ModelDataPinjamBarang();
+        $data = $dataPinjam->select('*, dataPinjamBarang.id as idP')->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')->where('dataPinjamBarang.id', $idP)->first();
+
+        echo json_encode($data);
     }
 
     public function daftarBarangDiambil()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
         $dataAmbil = new ModelAmbilBarang();
         $data['ambil'] = $dataAmbil
             ->join('dataBarang', 'dataBarang.id = dataAmbilBarang.idBarang')
             ->orderBy('dataAmbilBarang.id', 'DESC')
             ->findAll();
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
         return \view('admin/pages/daftarBarangDiambil', $data);
+    }
+
+    public function updatePengguna()
+    {
+        $email = $this->request->getVar('email');
+        $nama = $this->request->getVar('nama');
+        $password = $this->request->getVar('password');
+
+        $id = $this->dataPengguna->where('email', session()->get('email'))->first()->id;
+
+        if ($password != '') {
+            $data = [
+                'id' => $id,
+                'email' => $email,
+                'nama' => $nama,
+                'pass' => password_hash($password, PASSWORD_DEFAULT)
+            ];
+        } else {
+            $data = [
+                'id' => $id,
+                'email' => $email,
+                'nama' => $nama
+            ];
+        }
+
+        $this->dataPengguna->save($data);
+        return redirect()->to('admin/logout');
+    }
+
+    public function users()
+    {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+        $data['admin'] = $this->dataPengguna->where('email', session()->get('email'))->first();
+        $data['instansi'] = $this->dataInstansi->first();
+        $data['users'] = $this->dataPengguna->where('level', '1')->findAll();
+
+       return view('admin/pages/users', $data);
+    }
+
+    public function tambahUser()
+    {
+        $email = $this->request->getVar('emailUser');
+        $nama = $this->request->getVar('namaUser');
+        $pass = $this->request->getVar('passwordUser');
+        $phone = $this->request->getVar('noHP');
+
+        $ada = $this->dataPengguna->where('email', $email)->first();
+
+        if ($ada) {
+            echo '2';
+        } else {
+            $data = [
+                'email' => $email,
+                'nama' => $nama,
+                'phone' => $phone,
+                'pass' => password_hash($pass, PASSWORD_DEFAULT)
+            ];
+    
+            $simpan = $this->dataPengguna->save($data);
+
+            echo "1";
+        }
+    
+    }
+
+    public function hapusUser()
+    {
+        $id = $this->request->getVar('id');
+        $this->dataPengguna->delete($id);
+    }
+
+    public function getDataUser()
+    {
+        $id = $this->request->getVar('id');
+        $data = $this->dataPengguna->where('id', $id)->first();
+        echo json_encode($data);
+    }
+
+    public function prosesUbahUser()
+    {
+        $id = $this->request->getVar('idUser');
+        $email = $this->request->getVar('u_emailUser');
+        $nama = $this->request->getVar('u_namaUser');
+        $pass = $this->request->getVar('u_passwordUser');
+        $phone = $this->request->getVar('u_nomorHP');
+
+
+        if ($pass !='') {
+            $data = [
+                'id' => $id,
+                'email' => $email,
+                'nama' => $nama,
+                'phone' => $phone,
+                'pass' => password_hash($pass, PASSWORD_DEFAULT)
+            ];
+        } else {
+            $data = [
+                'id' => $id,
+                'email' => $email,
+                'phone' => $phone,
+                'nama' => $nama
+            ];
+        }
+        
+        $simpan = $this->dataPengguna->save($data);
+        if ($simpan) {
+            session()->setFlashdata('tipe', 'success');
+            session()->setFlashdata('pesan', 'Data berhasil disimpan');
+        }
+        return redirect()->back();
+
+    }
+
+    public function updateInstansi()
+    {
+        $image = \Config\Services::image();
+
+        $namaInstansi = $this->request->getVar('namaInstansi');
+        $alamat = $this->request->getVar('alamat');
+        $api = $this->request->getVar('api');
+        $file = $this->request->getFile('logo');
+
+        $validationRule = [
+            'logo' => [
+                'label' => 'Image File',
+                'rules' => [
+                    'uploaded[logo]',
+                    'is_image[logo]',
+                    'mime_in[logo,image/jpg,image/jpeg,image/gif,image/png]',
+                ],
+            ],
+        ];
+        if (! $this->validate($validationRule)) {
+            $errors = ['errors' => $this->validator->getErrors()];
+        }
+
+        $newName = $file->getRandomName();
+        $up = $file->move('logo/', $newName);
+        
+        if ($up) {
+            $image->withFile('logo/'.$newName)
+                ->resize(30, 30, true, 'height')
+                ->save('logo/thumb/thumb_'.$newName);
+
+            $data = [
+                'id' => '1',
+                'namaInstansi' => $namaInstansi,
+                'alamat' => $alamat,
+                'logo' => $newName,
+                'api' => $api,
+            ];
+        } else {
+            $data = [
+                'id' => '1',
+                'namaInstansi' => $namaInstansi,
+                'alamat' => $alamat,
+                'api' => $api,
+            ];
+        }
+        
+        $simpan = $this->dataInstansi->save($data);
+        if ($simpan) {
+            session()->setFlashdata('tipe', 'success');
+            session()->setFlashdata('pesan', 'Data berhasil disimpan');
+        }
+        return redirect()->back();
+    }
+
+    public function tagihBarang()
+    {
+        $id = $this->request->getVar('id');
+        
+        $api = $this->dataInstansi->first()->api;
+
+        $dataPinjamBarang = new ModelDataPinjamBarang();
+        $data = $dataPinjamBarang->where('datapinjambarang.id', $id)
+        ->join('databarang', 'databarang.kodeBarang = datapinjambarang.kodeBarang', 'left')
+        ->first();
+
+        $pesan = 'Mohon segera melakukan pengembalian barang yang telah dipinjam berupa:
+'.$data->namaBarang;
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $api,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array(
+            'message' => $pesan,
+            'number' => $data->phone,
+            'token' => 'TokenSaya'
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    echo $response;
+
+    }
+
+    public function getNomorHp()
+    {
+        $nama = $this->request->getVar('nama');
+
+        $data = $this->dataPengguna->where('nama', $nama)->first();
+      
+        if ($data) {
+            echo json_encode($data);
+        } else {
+            echo '0';
+        }
     }
 }

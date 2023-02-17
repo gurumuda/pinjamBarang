@@ -121,10 +121,14 @@ if (document.querySelector('.fixed-plugin')) {
 }
 
 //Set Sidebar Color
+
 function sidebarColor(a) {
   var parent = document.querySelector(".nav-link.active");
   var color = a.getAttribute("data-color");
 
+  localStorage.setItem("warna", color);
+  let warna = localStorage.getItem("warna");
+  
   if (parent.classList.contains('bg-gradient-primary')) {
     parent.classList.remove('bg-gradient-primary');
   }
@@ -143,8 +147,22 @@ function sidebarColor(a) {
   if (parent.classList.contains('bg-gradient-danger')) {
     parent.classList.remove('bg-gradient-danger');
   }
-  parent.classList.add('bg-gradient-' + color);
+  parent.classList.add('bg-gradient-' + warna);
 }
+
+$(document).ready(function() {
+  var parent = document.querySelector(".nav-link.active");
+  let warna = localStorage.getItem("warna");
+
+  if (warna != null) {
+    parent.classList.add('bg-gradient-' + warna);
+    
+  } else {
+    parent.classList.add('bg-gradient-primary');
+  }
+ 
+})
+
 
 // Set Sidebar Type
 function sidebarType(a) {

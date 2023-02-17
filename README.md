@@ -4,7 +4,7 @@
 
 Aplikasi ini dibuat untuk mempermudah dalam manajemen dan penggunaan barang milik sekolah.
 
-Status aplikasi dalam proses pembuatan
+Status aplikasi dalam proses pengembangan
 
 ## Keperluan Server
 
@@ -61,3 +61,6 @@ Default login
 
 Dokumentasi pembuatan pada video berikut
 [Video Dokumentasi](https://www.youtube.com/playlist?list=PLCQQ4mSKjCBs2poBOMMUZdCn1mcavcw2i)
+
+Video Installasi pada link berikut
+[Video Installasi](https://youtu.be/EcPCR6kVQXg)
