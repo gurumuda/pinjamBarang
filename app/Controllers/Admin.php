@@ -10,8 +10,7 @@ use App\Models\ModelAmbilBarang;
 use App\Models\ModelPengguna;
 use App\Models\ModelInstansi;
 use Picqer;
-
-
+use Mpdf\Mpdf;
 
 class Admin extends BaseController
 {
@@ -51,7 +50,10 @@ class Admin extends BaseController
 
     public function ubahStatusPesanan()
     {
-        # code...
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('id');
         $dataPesanan = new ModelDaftarPesanan();
         $data = ['id' => $id, 'status' => '1'];
@@ -60,6 +62,10 @@ class Admin extends BaseController
 
     public function getJenisBarang()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $idP = $this->request->getVar('idp');
         $dataPesanan = new ModelDaftarPesanan();
 
@@ -217,6 +223,10 @@ class Admin extends BaseController
 
     public function getPeminjam()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $kodeBarang = $this->request->getVar('kodeBarang');
         $dataPinjamBarang = new ModelDataPinjamBarang();
 
@@ -233,6 +243,10 @@ class Admin extends BaseController
 
     public function barangDipinjam()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $kodeBarang = $this->request->getVar('kodeBarang');
         $namaPeminjam = $this->request->getVar('namaPeminjam');
 
@@ -248,6 +262,10 @@ class Admin extends BaseController
 
     public function prosesKembaliBarangModal()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $kbIdBarang = $this->request->getVar('kbIdBarang');
         $kbIdPinjaman = $this->request->getVar('kbIdPinjaman');
         $kbKodeBarang = $this->request->getVar('kbKodeBarang');
@@ -338,6 +356,10 @@ class Admin extends BaseController
 
     public function tambahBarang()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $kodeBarang = $this->request->getVar('kodeBarang');
         $namaBarang = $this->request->getVar('namaBarang');
         $jenisBarang = $this->request->getVar('jenisBarang');
@@ -383,6 +405,10 @@ class Admin extends BaseController
 
     public function hapusBarang()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar("id");
         $dataBarang = new ModelDaftarBarang();
         $dataBarang->delete($id);
@@ -390,6 +416,10 @@ class Admin extends BaseController
 
     public function hapusSemua()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('hapus');
 
         $dataBarang = new ModelDaftarBarang();
@@ -405,6 +435,10 @@ class Admin extends BaseController
 
     public function getDataBarang()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('id');
 
         $dataBarang = new ModelDaftarBarang();
@@ -418,6 +452,10 @@ class Admin extends BaseController
 
     public function getDataBarangByKode()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $kodeBarang = $this->request->getVar('kodeBarang');
 
         $dataBarang = new ModelDaftarBarang();
@@ -436,6 +474,10 @@ class Admin extends BaseController
 
     public function ubahDataBarang()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('idUbahBarang');
         $kodeBarang = $this->request->getVar('ubahKodeBarang');
         $namaBarang = $this->request->getVar('ubahNamaBarang');
@@ -464,6 +506,10 @@ class Admin extends BaseController
 
     public function generateBarcode()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         helper('text');
         helper('filesystem');
         $id = $this->request->getVar('id');
@@ -498,6 +544,10 @@ class Admin extends BaseController
 
     public function printBarcode()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('idBarcode');
         $data['jumlah'] = $jumlah = $this->request->getVar('jumlah');
         if ($jumlah == '' || $jumlah <= 0) {
@@ -529,6 +579,10 @@ class Admin extends BaseController
 
     public function getDataBarangKembalikan()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $idP = $this->request->getVar('idP');
 
         $dataPinjam = new ModelDataPinjamBarang();
@@ -554,6 +608,10 @@ class Admin extends BaseController
 
     public function updatePengguna()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $email = $this->request->getVar('email');
         $nama = $this->request->getVar('nama');
         $password = $this->request->getVar('password');
@@ -593,6 +651,10 @@ class Admin extends BaseController
 
     public function tambahUser()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $email = $this->request->getVar('emailUser');
         $nama = $this->request->getVar('namaUser');
         $pass = $this->request->getVar('passwordUser');
@@ -619,12 +681,20 @@ class Admin extends BaseController
 
     public function hapusUser()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('id');
         $this->dataPengguna->delete($id);
     }
 
     public function getDataUser()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('id');
         $data = $this->dataPengguna->where('id', $id)->first();
         echo json_encode($data);
@@ -632,6 +702,10 @@ class Admin extends BaseController
 
     public function prosesUbahUser()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('idUser');
         $email = $this->request->getVar('u_emailUser');
         $nama = $this->request->getVar('u_namaUser');
@@ -667,6 +741,10 @@ class Admin extends BaseController
 
     public function updateInstansi()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $image = \Config\Services::image();
 
         $namaInstansi = $this->request->getVar('namaInstansi');
@@ -722,6 +800,10 @@ class Admin extends BaseController
 
     public function tagihBarang()
     {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
         $id = $this->request->getVar('id');
         
         $api = $this->dataInstansi->first()->api;
@@ -761,8 +843,11 @@ class Admin extends BaseController
 
     public function getNomorHp()
     {
-        $nama = $this->request->getVar('nama');
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
 
+        $nama = $this->request->getVar('nama');
         $data = $this->dataPengguna->where('nama', $nama)->first();
       
         if ($data) {
@@ -770,5 +855,89 @@ class Admin extends BaseController
         } else {
             echo '0';
         }
+    }
+
+    public function dwnBrgDipinjam()
+    {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
+        $pinjam = new ModelDataPinjamBarang();
+        $data = $pinjam
+            ->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang', 'LEFT')
+            ->findAll();
+        $no = 1;
+
+        $print = '<style>
+                    #customers {
+                        font-family: Arial, Helvetica, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    
+                    #customers td, #customers th {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        vertical-align: top;
+                    }
+                    #customers th {
+                        white-space: nowrap;
+                    }
+                    #customers tr:nth-child(even){background-color: #f2f2f2;}
+                    
+                    #customers tr:hover {background-color: #ddd;}
+                    
+                    #customers th {
+                        padding-top: 12px;
+                        padding-bottom: 12px;
+                        text-align: left;
+                        background-color: #04AA6D;
+                        color: white;
+                    }
+                    .tengah {
+                        text-align: center;
+                    }
+                    h3 {margin-bottom: 30px;}
+                </style>';
+                $print .= '<h3 class="tengah">Daftar Pemakaian Barang Modal</h3>';
+        $print .= '<table id="customers">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Barang</th>
+                            <th>Nama Peminjam</th>
+                            <th>HP</th>
+                            <th>Jumlah</th>
+                            <th>Tanggal</th>
+                            <th>Keperluan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        foreach ($data as $dt) {
+            $print .= '<tr>';
+            $print .= '<td>'.$no++.'</td>';
+            $print .= '<td>'.$dt->namaBarang.'</td>';
+            $print .= '<td>'.$dt->namaPeminjam.'</td>';
+            $print .= '<td>'.$dt->phone.'</td>';
+            $print .= '<td>'.$dt->jumlahBarang.'</td>';
+            $print .= '<td>'.tglIndo($dt->tanggalPinjam).'</td>';
+            $print .= '<td>'.$dt->keperluan.'</td>';
+            $print .= '<td>'.(($dt->status == '1') ? 'Kembali' : 'Belum kembali').'</td>';
+            $print .= '</tr>';     
+                     
+        }
+        $print .= '</tbody></table>';
+                        
+        $mpdf = new Mpdf(['orientation' => 'L', 'format' => 'A4']);
+        $mpdf->SetAuthor('GuruMuda');
+        $mpdf->SetCreator('GuruMuda');
+        $mpdf->SetWatermarkText('GuruMuda');
+        $mpdf->showWatermarkText = true;
+        $mpdf->watermarkTextAlpha = 0.1;
+        $mpdf->WriteHTML($print);
+        
+        $a = $mpdf->Output('Daftar Pemakaian Barang Modal.pdf', 'D');
     }
 }

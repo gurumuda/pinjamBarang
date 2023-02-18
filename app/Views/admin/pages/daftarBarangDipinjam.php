@@ -12,6 +12,9 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
+                    <div class="p-0 ms-4 m-2">
+                        <a href="/admin/dwnBrgDipinjam" class="btn bg-gradient-info">Unduh Semua Data</a>
+                    </div>
                     <div class="table-responsive p-0 m-4">
                         <table class="table align-items-center mb-0">
                             <thead>

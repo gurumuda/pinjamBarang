@@ -29,3 +29,13 @@ function halaman($halaman) {
             break;
     }
 }
+
+function tglIndo($tanggal)
+{
+    $t = explode('-',$tanggal);
+    $tahun = $t[0];
+    $bulan = $t[1];
+    $tgl = $t[2];
+
+    return $tgl.' - '.$bulan.' - '.$tahun;
+}
