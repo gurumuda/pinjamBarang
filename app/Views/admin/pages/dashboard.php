@@ -9,38 +9,37 @@
 </style>
 
 <style>
+    /*the container must be positioned relative:*/
 
-/*the container must be positioned relative:*/
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 35%;
+        right: 10px;
+    }
 
-.autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 35%;
-  right: 10px;
-}
+    .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border-bottom: 1px solid #d4d4d4;
+    }
 
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
-}
+    /*when hovering an item:*/
+    .autocomplete-items div:hover {
+        background-color: #e9e9e9;
+    }
 
-/*when hovering an item:*/
-.autocomplete-items div:hover {
-  background-color: #e9e9e9; 
-}
-
-/*when navigating through the items using the arrow keys:*/
-.autocomplete-active {
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
-}
+    /*when navigating through the items using the arrow keys:*/
+    .autocomplete-active {
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
 </style>
 
 <div class="container-fluid py-4">
@@ -135,7 +134,7 @@
                             <input type="number" name="jumlahBarang" id="jumlahBarang" class="form-control" placeholder="Masukkan jumlah barang yang dipinjam">
                         </div>
                     </div>
-                   
+
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Pinjam</label>
@@ -213,7 +212,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Kembali</label>
-                            <input type="text" name="waktu" id="filter-date"  autocomplete="off" class="form-control" placeholder="Tanggal dan waktu kembali">
+                            <input type="text" name="waktu" id="filter-date" autocomplete="off" class="form-control" placeholder="Tanggal dan waktu kembali">
                         </div>
                     </div>
                 </div>
@@ -278,7 +277,7 @@
                     <div class="row mb-2">
                         <div class="input-group input-group-outline">
                             <label for="" class="col-4">Waktu Ambil</label>
-                            <input type="text" name="waktu" id="filter-date-3"  autocomplete="off" class="form-control" placeholder="Tanggal dan waktu ambil">
+                            <input type="text" name="waktu" id="filter-date-3" autocomplete="off" class="form-control" placeholder="Tanggal dan waktu ambil">
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -446,17 +445,16 @@
 
 </div>
 
-    <?php 
-    $nama = '';
-    foreach($users as $us) {
-        $nama .= '"';
-        $nama .= $us->nama;
-        $nama .= '",';
-    }?>
+<?php
+$nama = '';
+foreach ($users as $us) {
+    $nama .= '"';
+    $nama .= $us->nama;
+    $nama .= '",';
+} ?>
 <script>
-
-      /*An array containing all the country names in the world:*/
-var countries = [<?= $nama;?>];
+    /*An array containing all the country names in the world:*/
+    var countries = [<?= $nama; ?>];
 </script>
 
 <script src="/template/myscript/autocomplate.js"></script>
