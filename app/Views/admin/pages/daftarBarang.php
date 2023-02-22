@@ -14,6 +14,10 @@
             <button type="submit" class="btn bg-gradient-danger">Hapus Data</button>
         </div>
 
+        <div class="col-lg-2 d-grid gap-2">
+        <a href="/admin/dwnBrg" class="btn bg-gradient-info">Unduh Data</a>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-12">

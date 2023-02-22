@@ -809,8 +809,8 @@ class Admin extends BaseController
         $api = $this->dataInstansi->first()->api;
 
         $dataPinjamBarang = new ModelDataPinjamBarang();
-        $data = $dataPinjamBarang->where('datapinjambarang.id', $id)
-        ->join('databarang', 'databarang.kodeBarang = datapinjambarang.kodeBarang', 'left')
+        $data = $dataPinjamBarang->where('dataPinjamBarang.id', $id)
+        ->join('dataBarang', 'dataBarang.kodeBarang = dataPinjamBarang.kodeBarang', 'left')
         ->first();
 
         $pesan = 'Mohon segera melakukan pengembalian barang yang telah dipinjam berupa:
@@ -925,6 +925,89 @@ class Admin extends BaseController
             $print .= '<td>'.tglIndo($dt->tanggalPinjam).'</td>';
             $print .= '<td>'.$dt->keperluan.'</td>';
             $print .= '<td>'.(($dt->status == '1') ? 'Kembali' : 'Belum kembali').'</td>';
+            $print .= '</tr>';     
+                     
+        }
+        $print .= '</tbody></table>';
+                        
+        $mpdf = new Mpdf(['orientation' => 'L', 'format' => 'A4']);
+        $mpdf->SetAuthor('GuruMuda');
+        $mpdf->SetCreator('GuruMuda');
+        $mpdf->SetWatermarkText('GuruMuda');
+        $mpdf->showWatermarkText = true;
+        $mpdf->watermarkTextAlpha = 0.1;
+        $mpdf->WriteHTML($print);
+        
+        $a = $mpdf->Output('Daftar Pemakaian Barang Modal.pdf', 'D');
+    }
+
+    public function dwnBrg()
+    {
+        if (!(session()->get('email') && \session()->get('level') == 'adm')) {
+            return redirect()->to('login');
+        }
+
+        $barang = new ModelDaftarBarang();
+        $data = $barang
+            ->orderBy('jenisBarang', 'DESC')
+            ->orderBy('stokBarang', 'ASC')
+            ->findAll();
+        $no = 1;
+
+        $print = '<style>
+                    #customers {
+                        font-family: Arial, Helvetica, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    
+                    #customers td, #customers th {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        vertical-align: top;
+                    }
+                    #customers th {
+                        white-space: nowrap;
+                    }
+                    #customers tr:nth-child(even){background-color: #f2f2f2;}
+                    
+                    #customers tr:hover {background-color: #ddd;}
+                    
+                    #customers th {
+                        padding-top: 12px;
+                        padding-bottom: 12px;
+                        text-align: left;
+                        background-color: #04AA6D;
+                        color: white;
+                    }
+                    .tengah {
+                        text-align: center;
+                    }
+                    h3 {margin-bottom: 30px;}
+                </style>';
+                $print .= '<h3 class="tengah">Daftar Barang Modal dan Barang Habis Pakai <br> SMA Negeri 1 Jorong <br> Tahun 2023</h3>';
+        $print .= '<table id="customers">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode Barang</th>
+                            <th>Nama Barang</th>
+                            <th>Jenis Barang</th>
+                            <th>Stok</th>
+                            <th>Terdata</th>
+                            <th>Satuan</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        foreach ($data as $dt) {
+            $print .= '<tr>';
+            $print .= '<td>'.$no++.'</td>';
+            $print .= '<td>'.$dt->kodeBarang.'</td>';
+            $print .= '<td>'.$dt->namaBarang.'</td>';
+            $print .= '<td>'.(($dt->jenisBarang == 1) ? "Barang modal" : "Barang habis pakai").'</td>';
+            $print .= '<td>'.$dt->stokBarang.'</td>';
+            $print .= '<td>'.$dt->jmlDimiliki.'</td>';
+            $print .= '<td>'.$dt->satuan.'</td>';
             $print .= '</tr>';     
                      
         }
