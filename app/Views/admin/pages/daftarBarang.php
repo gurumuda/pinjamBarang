@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-lg-2 d-grid gap-2">
-        <a href="/admin/dwnBrg" class="btn bg-gradient-info">Unduh Data</a>
+            <a href="/admin/dwnBrg" class="btn bg-gradient-info">Unduh Data</a>
         </div>
 
     </div>
@@ -71,6 +71,7 @@
                     <?= $pager->links('dataBarang', 'my_pagination') ?>
 
                 </div>
+
 
 
             </div>

@@ -12,10 +12,14 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
+                    <div class="p-0 ms-4 m-2">
+                        <a href="/admin/dwnBrgDiambil" class="btn bg-gradient-info">Unduh Semua Data</a>
+                    </div>
                     <div class="table-responsive p-0 m-4">
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
+                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">No</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Kode Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Pengambil</th>
@@ -28,6 +32,7 @@
                             <tbody>
                                 <?php foreach ($ambil as $brg) : ?>
                                     <tr>
+                                        <td class="text-xs"><?= $nomor++; ?></td>
                                         <td class="text-xs"><?= $brg->kodeBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaPengambil; ?></td>
@@ -41,6 +46,10 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div class="card-footer">
+                    <?= $pager->links('dataAmbilBarang', 'my_pagination') ?>
                 </div>
 
             </div>

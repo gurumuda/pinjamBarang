@@ -19,6 +19,8 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
+                                    <th class="text-uppercase text-secondary text-sm opacity-7 ps-2 ">No</th>
+                                    <th class="text-uppercase text-secondary text-sm opacity-7 ps-2 text-center">Status</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Kode Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Nama Peminjam</th>
@@ -28,12 +30,19 @@
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Tanggal Pinjam</th>
                                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Waktu Pinjam</th>
                                     <th class="text-uppercase text-secondary text-sm opacity-7 ps-2">Keperluan</th>
-                                    <th class="text-uppercase text-secondary text-sm opacity-7 ps-2">Status</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($pinjam as $brg) : ?>
                                     <tr>
+                                        <td class="text-xs"><?= $nomor++; ?></td>
+                                        <td class="text-xs text-center">
+                                            <?= ($brg->status == '0') ? '<span type="button" data-id="' . $brg->idP . '" class="badge bg-danger tbProsesKembaliBrg">Proses</span>' : '' ?>
+
+                                            <?= ($brg->status == '0' && $brg->phone != '') ? '<span type="button" data-id="' . $brg->idP . '" data-nama="' . $brg->namaPeminjam . '" class="badge bg-info tbTagih">Ingatkan</span>' : '' ?>
+
+                                            <?= ($brg->status == '1') ? '<span class="badge bg-success">Kembali</span>' : ''; ?></td>
                                         <td class="text-xs"><?= $brg->kodeBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaBarang; ?></td>
                                         <td class="text-xs"><?= $brg->namaPeminjam; ?></td>
@@ -43,17 +52,17 @@
                                         <td class="text-xs"><?= $brg->tanggalPinjam; ?></td>
                                         <td class="text-xs"><?= $brg->waktuPinjam; ?></td>
                                         <td class="text-xs"><?= $brg->keperluan; ?></td>
-                                        <td class="text-xs">
-                                            <?= ($brg->status == '0') ? '<span type="button" data-id="'.$brg->idP.'" class="badge bg-danger tbProsesKembaliBrg">Proses</span>' : '' ?>
 
-                                            <?= ($brg->status == '0' && $brg->phone != '') ? '<span type="button" data-id="'.$brg->idP.'" data-nama="'.$brg->namaPeminjam.'" class="badge bg-info tbTagih">Ingatkan</span>' : '' ?>
-
-                                        <?= ($brg->status == '1') ? '<span class="badge bg-success">Kembali</span>' : '<span class="badge bg-warning">Belum Kembali</span>'; ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div class="card-footer">
+                    <?= $pager->links('dataPinjamBarang', 'my_pagination') ?>
+
                 </div>
 
             </div>

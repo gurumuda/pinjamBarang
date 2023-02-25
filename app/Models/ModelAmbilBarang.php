@@ -38,4 +38,10 @@ class ModelAmbilBarang extends Model
     // protected $afterFind      = [];
     // protected $beforeDelete   = [];
     // protected $afterDelete    = [];
+
+    function dataKu()
+    {
+        return $this->join('dataBarang', 'dataBarang.id = dataAmbilBarang.idBarang')
+            ->orderBy('dataAmbilBarang.id', 'DESC');
+    }
 }

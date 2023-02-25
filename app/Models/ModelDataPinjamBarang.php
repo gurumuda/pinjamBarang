@@ -38,4 +38,12 @@ class ModelDataPinjamBarang extends Model
     // protected $afterFind      = [];
     // protected $beforeDelete   = [];
     // protected $afterDelete    = [];
+
+    function dataKu()
+    {
+        return $this->select('*, dataPinjamBarang.id as idP')
+            ->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')
+            ->orderBy('status', 'ASC')
+            ->orderBy('dataPinjamBarang.id', 'DESC');
+    }
 }
