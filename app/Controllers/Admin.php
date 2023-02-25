@@ -15,14 +15,14 @@ use Mpdf\Mpdf;
 class Admin extends BaseController
 {
     protected $helpers = ['my_helper', 'form'];
-    
-    
+
+
     public function __construct()
     {
         $this->dataPengguna = new ModelPengguna();
         $this->dataInstansi = new ModelInstansi();
     }
-    
+
 
     public function index()
     {
@@ -567,7 +567,7 @@ class Admin extends BaseController
         }
         $dataPinjam = new ModelDataPinjamBarang();
         $data['pinjam'] = $dataPinjam
-            ->select('*, datapinjambarang.id as idP')
+            ->select('*, dataPinjamBarang.id as idP')
             ->join('dataBarang', 'dataBarang.id = dataPinjamBarang.idBarang')
             ->orderBy('status', 'ASC')
             ->orderBy('dataPinjamBarang.id', 'DESC')
@@ -646,7 +646,7 @@ class Admin extends BaseController
         $data['instansi'] = $this->dataInstansi->first();
         $data['users'] = $this->dataPengguna->where('level', '1')->findAll();
 
-       return view('admin/pages/users', $data);
+        return view('admin/pages/users', $data);
     }
 
     public function tambahUser()
@@ -671,12 +671,11 @@ class Admin extends BaseController
                 'phone' => $phone,
                 'pass' => password_hash($pass, PASSWORD_DEFAULT)
             ];
-    
+
             $simpan = $this->dataPengguna->save($data);
 
             echo "1";
         }
-    
     }
 
     public function hapusUser()
@@ -713,7 +712,7 @@ class Admin extends BaseController
         $phone = $this->request->getVar('u_nomorHP');
 
 
-        if ($pass !='') {
+        if ($pass != '') {
             $data = [
                 'id' => $id,
                 'email' => $email,
@@ -729,14 +728,13 @@ class Admin extends BaseController
                 'nama' => $nama
             ];
         }
-        
+
         $simpan = $this->dataPengguna->save($data);
         if ($simpan) {
             session()->setFlashdata('tipe', 'success');
             session()->setFlashdata('pesan', 'Data berhasil disimpan');
         }
         return redirect()->back();
-
     }
 
     public function updateInstansi()
@@ -762,17 +760,17 @@ class Admin extends BaseController
                 ],
             ],
         ];
-        if (! $this->validate($validationRule)) {
+        if (!$this->validate($validationRule)) {
             $errors = ['errors' => $this->validator->getErrors()];
         }
 
         $newName = $file->getRandomName();
         $up = $file->move('logo/', $newName);
-        
+
         if ($up) {
-            $image->withFile('logo/'.$newName)
+            $image->withFile('logo/' . $newName)
                 ->resize(30, 30, true, 'height')
-                ->save('logo/thumb/thumb_'.$newName);
+                ->save('logo/thumb/thumb_' . $newName);
 
             $data = [
                 'id' => '1',
@@ -789,7 +787,7 @@ class Admin extends BaseController
                 'api' => $api,
             ];
         }
-        
+
         $simpan = $this->dataInstansi->save($data);
         if ($simpan) {
             session()->setFlashdata('tipe', 'success');
@@ -805,40 +803,39 @@ class Admin extends BaseController
         }
 
         $id = $this->request->getVar('id');
-        
+
         $api = $this->dataInstansi->first()->api;
 
         $dataPinjamBarang = new ModelDataPinjamBarang();
         $data = $dataPinjamBarang->where('dataPinjamBarang.id', $id)
-        ->join('dataBarang', 'dataBarang.kodeBarang = dataPinjamBarang.kodeBarang', 'left')
-        ->first();
+            ->join('dataBarang', 'dataBarang.kodeBarang = dataPinjamBarang.kodeBarang', 'left')
+            ->first();
 
         $pesan = 'Mohon segera melakukan pengembalian barang yang telah dipinjam berupa:
-'.$data->namaBarang;
+' . $data->namaBarang;
 
-    $curl = curl_init();
+        $curl = curl_init();
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => $api,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array(
-            'message' => $pesan,
-            'number' => $data->phone,
-            'token' => 'TokenSaya'
-        ),
-    ));
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $api,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'message' => $pesan,
+                'number' => $data->phone,
+                'token' => 'TokenSaya'
+            ),
+        ));
 
-    $response = curl_exec($curl);
+        $response = curl_exec($curl);
 
-    curl_close($curl);
-    echo $response;
-
+        curl_close($curl);
+        echo $response;
     }
 
     public function getNomorHp()
@@ -849,7 +846,7 @@ class Admin extends BaseController
 
         $nama = $this->request->getVar('nama');
         $data = $this->dataPengguna->where('nama', $nama)->first();
-      
+
         if ($data) {
             echo json_encode($data);
         } else {
@@ -900,7 +897,7 @@ class Admin extends BaseController
                     }
                     h3 {margin-bottom: 30px;}
                 </style>';
-                $print .= '<h3 class="tengah">Daftar Pemakaian Barang Modal</h3>';
+        $print .= '<h3 class="tengah">Daftar Pemakaian Barang Modal</h3>';
         $print .= '<table id="customers">
                     <thead>
                         <tr>
@@ -917,19 +914,18 @@ class Admin extends BaseController
                     <tbody>';
         foreach ($data as $dt) {
             $print .= '<tr>';
-            $print .= '<td>'.$no++.'</td>';
-            $print .= '<td>'.$dt->namaBarang.'</td>';
-            $print .= '<td>'.$dt->namaPeminjam.'</td>';
-            $print .= '<td>'.$dt->phone.'</td>';
-            $print .= '<td>'.$dt->jumlahBarang.'</td>';
-            $print .= '<td>'.tglIndo($dt->tanggalPinjam).'</td>';
-            $print .= '<td>'.$dt->keperluan.'</td>';
-            $print .= '<td>'.(($dt->status == '1') ? 'Kembali' : 'Belum kembali').'</td>';
-            $print .= '</tr>';     
-                     
+            $print .= '<td>' . $no++ . '</td>';
+            $print .= '<td>' . $dt->namaBarang . '</td>';
+            $print .= '<td>' . $dt->namaPeminjam . '</td>';
+            $print .= '<td>' . $dt->phone . '</td>';
+            $print .= '<td>' . $dt->jumlahBarang . '</td>';
+            $print .= '<td>' . tglIndo($dt->tanggalPinjam) . '</td>';
+            $print .= '<td>' . $dt->keperluan . '</td>';
+            $print .= '<td>' . (($dt->status == '1') ? 'Kembali' : 'Belum kembali') . '</td>';
+            $print .= '</tr>';
         }
         $print .= '</tbody></table>';
-                        
+
         $mpdf = new Mpdf(['orientation' => 'L', 'format' => 'A4']);
         $mpdf->SetAuthor('GuruMuda');
         $mpdf->SetCreator('GuruMuda');
@@ -937,7 +933,7 @@ class Admin extends BaseController
         $mpdf->showWatermarkText = true;
         $mpdf->watermarkTextAlpha = 0.1;
         $mpdf->WriteHTML($print);
-        
+
         $a = $mpdf->Output('Daftar Pemakaian Barang Modal.pdf', 'D');
     }
 
@@ -985,7 +981,7 @@ class Admin extends BaseController
                     }
                     h3 {margin-bottom: 30px;}
                 </style>';
-                $print .= '<h3 class="tengah">Daftar Barang Modal dan Barang Habis Pakai <br> SMA Negeri 1 Jorong <br> Tahun 2023</h3>';
+        $print .= '<h3 class="tengah">Daftar Barang Modal dan Barang Habis Pakai <br> SMA Negeri 1 Jorong <br> Tahun 2023</h3>';
         $print .= '<table id="customers">
                     <thead>
                         <tr>
@@ -1001,18 +997,17 @@ class Admin extends BaseController
                     <tbody>';
         foreach ($data as $dt) {
             $print .= '<tr>';
-            $print .= '<td>'.$no++.'</td>';
-            $print .= '<td>'.$dt->kodeBarang.'</td>';
-            $print .= '<td>'.$dt->namaBarang.'</td>';
-            $print .= '<td>'.(($dt->jenisBarang == 1) ? "Barang modal" : "Barang habis pakai").'</td>';
-            $print .= '<td>'.$dt->stokBarang.'</td>';
-            $print .= '<td>'.$dt->jmlDimiliki.'</td>';
-            $print .= '<td>'.$dt->satuan.'</td>';
-            $print .= '</tr>';     
-                     
+            $print .= '<td>' . $no++ . '</td>';
+            $print .= '<td>' . $dt->kodeBarang . '</td>';
+            $print .= '<td>' . $dt->namaBarang . '</td>';
+            $print .= '<td>' . (($dt->jenisBarang == 1) ? "Barang modal" : "Barang habis pakai") . '</td>';
+            $print .= '<td>' . $dt->stokBarang . '</td>';
+            $print .= '<td>' . $dt->jmlDimiliki . '</td>';
+            $print .= '<td>' . $dt->satuan . '</td>';
+            $print .= '</tr>';
         }
         $print .= '</tbody></table>';
-                        
+
         $mpdf = new Mpdf(['orientation' => 'L', 'format' => 'A4']);
         $mpdf->SetAuthor('GuruMuda');
         $mpdf->SetCreator('GuruMuda');
@@ -1020,7 +1015,7 @@ class Admin extends BaseController
         $mpdf->showWatermarkText = true;
         $mpdf->watermarkTextAlpha = 0.1;
         $mpdf->WriteHTML($print);
-        
+
         $a = $mpdf->Output('Daftar Pemakaian Barang Modal.pdf', 'D');
     }
 }
