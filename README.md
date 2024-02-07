@@ -24,7 +24,7 @@ git clone https://github.com/gurumuda/pinjamBarang.git
 Install dependensi dengan composser
 
 ```base
-composer update
+composer install
 ```
 
 Buat database baru dengan nama yang disesuaikan pada nama database di file env
